@@ -118,12 +118,9 @@ export default function ExplorerPage() {
                       onClick={(e) => { e.preventDefault(); toggleTask(task); }}
                     >
                       <div
-                        className="w-4 h-4 rounded flex items-center justify-center transition-all"
-                        style={{
-                          background: selectedTasks.has(task) ? "#2E86AB" : "rgba(42,42,62,0.8)",
-                          border: selectedTasks.has(task) ? "1px solid #2E86AB" : "1px solid rgba(46,134,171,0.22)" }}
+                        className={`w-4 h-4 rounded flex items-center justify-center transition-all border ${selectedTasks.has(task) ? "bg-primary border-primary" : "bg-muted border-border"}`}
                       >
-                        {selectedTasks.has(task) && <CheckCircle2 className="w-3 h-3 text-foreground" />}
+                        {selectedTasks.has(task) && <CheckCircle2 className="w-3 h-3 text-primary-foreground" />}
                       </div>
                       <span className="text-sm text-foreground">{task}</span>
                     </label>
@@ -136,15 +133,11 @@ export default function ExplorerPage() {
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Frame Rate</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "30fps", "60fps"].map(fps => (
-                    <button
-                      key={fps}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-                      style={{
-                        background: selectedFps === fps ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
-                        color: selectedFps === fps ? "#2E86AB" : "#9090A0",
-                        border: selectedFps === fps ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)" }}
-                      onClick={() => setSelectedFps(fps)}
-                    >
+                      <button
+                        key={fps}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all border ${selectedFps === fps ? "bg-primary/10 text-primary border-primary/20" : "bg-muted text-muted-foreground border-transparent hover:border-border"}`}
+                        onClick={() => setSelectedFps(fps)}
+                      >
                       {fps}
                     </button>
                   ))}
@@ -156,15 +149,11 @@ export default function ExplorerPage() {
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Resolution</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "1080p", "720p"].map(res => (
-                    <button
-                      key={res}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-                      style={{
-                        background: selectedResolution === res ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
-                        color: selectedResolution === res ? "#2E86AB" : "#9090A0",
-                        border: selectedResolution === res ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)" }}
-                      onClick={() => setSelectedResolution(res)}
-                    >
+                      <button
+                        key={res}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all border ${selectedResolution === res ? "bg-primary/10 text-primary border-primary/20" : "bg-muted text-muted-foreground border-transparent hover:border-border"}`}
+                        onClick={() => setSelectedResolution(res)}
+                      >
                       {res}
                     </button>
                   ))}
@@ -176,15 +165,11 @@ export default function ExplorerPage() {
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">PII Status</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "No PII", "Blurred Required"].map(pii => (
-                    <button
-                      key={pii}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-                      style={{
-                        background: selectedPii === pii ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
-                        color: selectedPii === pii ? "#2E86AB" : "#9090A0",
-                        border: selectedPii === pii ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)" }}
-                      onClick={() => setSelectedPii(pii)}
-                    >
+                      <button
+                        key={pii}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all border ${selectedPii === pii ? "bg-primary/10 text-primary border-primary/20" : "bg-muted text-muted-foreground border-transparent hover:border-border"}`}
+                        onClick={() => setSelectedPii(pii)}
+                      >
                       {pii}
                     </button>
                   ))}
@@ -205,11 +190,8 @@ export default function ExplorerPage() {
           {activeFilterCount > 0 && (
             <div className="p-4" >
               <button
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-semibold transition-all"
-                
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-semibold transition-all text-destructive bg-destructive/10 hover:bg-destructive/20"
                 onClick={clearFilters}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.18)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.10)"; }}
               >
                 <FilterX className="w-4 h-4" /> Clear Filters
               </button>
@@ -226,11 +208,9 @@ export default function ExplorerPage() {
               <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
               <input
                 placeholder="Search by task, environment, video ID…"
-                className="w-full h-12 pl-10 pr-4 rounded-xl text-sm outline-none transition-all text-foreground"
+                className="w-full h-12 pl-10 pr-4 rounded-xl text-sm outline-none transition-all text-foreground bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#2E86AB")}
-                onBlur={(e)  => (e.currentTarget.style.borderColor = "rgba(46,134,171,0.18)")}
               />
             </div>
 
@@ -241,10 +221,7 @@ export default function ExplorerPage() {
                 {(["grid", "list"] as const).map((m) => (
                   <button
                     key={m}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
-                    style={{
-                      background: viewMode === m ? "rgba(46,134,171,0.20)" : "transparent",
-                      color: viewMode === m ? "#2E86AB" : "#9090A0" }}
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${viewMode === m ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
                     onClick={() => setViewMode(m)}
                   >
                     {m === "grid" ? <Grid className="h-4 w-4" /> : <List className="h-4 w-4" />}
@@ -326,13 +303,11 @@ export default function ExplorerPage() {
                           {/* QA badge */}
                           <div className="absolute top-2 right-2">
                             {video.qa_status === "Verified" ? (
-                              <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"
-                                >
+                              <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 bg-success/20 text-success border border-success/30">
                                 <CheckCircle2 className="w-3 h-3" /> VERIFIED
                               </div>
                             ) : (
-                              <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"
-                                >
+                              <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 bg-warning/20 text-warning border border-warning/30">
                                 <AlertCircle className="w-3 h-3" /> PENDING
                               </div>
                             )}
@@ -340,9 +315,8 @@ export default function ExplorerPage() {
 
                           {/* Play hover */}
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center"
-                              >
-                              <Play className="w-5 h-5 ml-0.5 text-foreground" />
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center bg-primary text-primary-foreground shadow-lg">
+                              <Play className="w-5 h-5 ml-0.5" />
                             </div>
                           </div>
                         </div>
@@ -351,23 +325,19 @@ export default function ExplorerPage() {
                         <div className={`flex-1 ${viewMode === "grid" ? "space-y-2" : "flex flex-col gap-2"}`}>
                           {viewMode === "grid" && (
                             <div
-                              className="rounded-xl p-3 space-y-2"
-                              
+                              className="rounded-xl p-3 space-y-2 bg-card border border-border shadow-sm"
                             >
                               <div className="flex items-center justify-between">
                                 <span className="font-mono text-xs font-semibold text-primary">{video.video_id}</span>
                                 <span
-                                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                                  style={video.pii_check_status === "No PII"
-                                    ? { }
-                                    : { }
-                                  }>
+                                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${video.pii_check_status === "No PII" ? "text-success bg-success/10 border-success/20" : "text-warning bg-warning/10 border-warning/20"}`}
+                                >
                                   {video.pii_check_status}
                                 </span>
                               </div>
                               <div className="flex flex-wrap gap-1">
                                 {video.task_type.map((task, i) => (
-                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary">
+                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary bg-primary/10 border border-primary/20">
                                     {task}
                                   </span>
                                 ))}
@@ -383,17 +353,14 @@ export default function ExplorerPage() {
                               <div className="flex items-center justify-between">
                                 <span className="font-mono text-xs font-semibold text-primary">{video.video_id}</span>
                                 <span
-                                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                                  style={video.pii_check_status === "No PII"
-                                    ? { }
-                                    : { }
-                                  }>
+                                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${video.pii_check_status === "No PII" ? "text-success bg-success/10 border-success/20" : "text-warning bg-warning/10 border-warning/20"}`}
+                                >
                                   {video.pii_check_status}
                                 </span>
                               </div>
                               <div className="flex flex-wrap gap-1">
                                 {video.task_type.map((task, i) => (
-                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary">
+                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary bg-primary/10 border border-primary/20">
                                     {task}
                                   </span>
                                 ))}

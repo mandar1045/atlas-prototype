@@ -39,10 +39,13 @@ const BAR_COLORS = ["#2E86AB", "#2A7695", "#25667E", "#205668", "#1B4651", "#173
 /* ─── Style helpers ─────────────────────────────────────────────────────── */
 
 const tooltipStyle = {
-  borderRadius: "10px",
-  
+  borderRadius: "8px",
   fontSize: "12px",
-  };
+  background: "#FFFFFF",
+  border: "1px solid #E4E4E7",
+  color: "#09090B",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+};
 
 /* ─── Stat card ─────────────────────────────────────────────────────────── */
 function StatCard({
@@ -138,12 +141,12 @@ export default function DashboardPage() {
                           <stop offset="100%" stopColor="#2E86AB" stopOpacity={0}    />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                      <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#9090A0", fontSize: 11 }} />
-                      <YAxis axisLine={false} tickLine={false} tick={{ fill: "#9090A0", fontSize: 11 }} />
-                      <Tooltip contentStyle={tooltipStyle} cursor={{ stroke: "rgba(46,134,171,0.3)" }} />
-                      <Area type="monotone" dataKey="hours" stroke="#2E86AB" strokeWidth={2.5}
-                        fill="url(#areaBlue)" name="Hours" dot={false} activeDot={{ r: 5, fill: "#2E86AB", stroke: "#0F0F14", strokeWidth: 2 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#E4E4E7" />
+                      <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#71717A", fontSize: 11 }} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fill: "#71717A", fontSize: 11 }} />
+                      <Tooltip contentStyle={tooltipStyle} cursor={{ stroke: "rgba(46,134,171,0.1)" }} />
+                      <Area type="monotone" dataKey="hours" stroke="#0070F3" strokeWidth={2.5}
+                        fill="url(#areaBlue)" name="Hours" dot={false} activeDot={{ r: 5, fill: "#0070F3", stroke: "#FFFFFF", strokeWidth: 2 }} />
                     </AreaChart>
                   </ResponsiveContainer>
                 ) : (
@@ -164,7 +167,7 @@ export default function DashboardPage() {
                       <XAxis type="number" hide />
                       <YAxis
                         dataKey="name" type="category" axisLine={false} tickLine={false}
-                        tick={{ fill: "#9090A0", fontSize: 11 }} width={100}
+                        tick={{ fill: "#71717A", fontSize: 11 }} width={100}
                       />
                       <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(46,134,171,0.05)" }} />
                       <Bar dataKey="value" radius={[0, 6, 6, 0]} name="Videos">
@@ -216,7 +219,7 @@ export default function DashboardPage() {
                     System Status
                   </div>
                   <div className="flex items-center gap-2 text-sm text-foreground">
-                    <div className="w-2 h-2 rounded-full" style={{
+                    <div className="w-2 h-2 rounded-full bg-success" style={{
                       animation: "pulse 2s infinite" }} />
                     <span className="text-xs">Data Pipeline Active</span>
                   </div>
@@ -252,7 +255,7 @@ export default function DashboardPage() {
                     <tr
                       key={video.id}
                       className="transition-colors"
-                      style={{ borderBottom: i < 5 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
+                      style={{ borderBottom: i < 5 ? "1px solid #E4E4E7" : "none" }}
                       onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,134,171,0.05)")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                     >
@@ -264,14 +267,14 @@ export default function DashboardPage() {
                           {video.task_type.slice(0, 2).map((task, j) => (
                             <span
                               key={j}
-                              className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary"
+                              className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary bg-primary/10 border border-primary/20"
                             >
                               {task}
                             </span>
                           ))}
                           {video.task_type.length > 2 && (
                             <span
-                              className="px-1.5 py-0.5 rounded text-[10px] text-muted-foreground"
+                              className="px-1.5 py-0.5 rounded text-[10px] text-muted-foreground bg-muted border border-border"
                             >
                               +{video.task_type.length - 2}
                             </span>
@@ -286,12 +289,7 @@ export default function DashboardPage() {
                       </td>
                       <td className="px-5 py-3 text-right">
                         <span
-                          className="px-2.5 py-1 rounded-full text-[10px] font-semibold"
-                          style={
-                            video.qa_status === "Verified"
-                              ? { }
-                              : { }
-                          }
+                          className={`px-2.5 py-1 rounded-full text-[10px] font-semibold border ${video.qa_status === "Verified" ? "text-success bg-success/10 border-success/20" : "text-warning bg-warning/10 border-warning/20"}`}
                         >
                           {video.qa_status}
                         </span>
