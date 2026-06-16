@@ -61,11 +61,11 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
             <div className="w-4 h-4 border-2 border-white rounded-sm rotate-45 transform" />
           </div>
           <div>
-            <span className="font-bold text-base tracking-tight" style={{ color: "#F0F0F0" }}>
+            <span className="font-bold text-base tracking-tight text-foreground">
               Locara Atlas
             </span>
             {isAdmin && (
-              <div className="flex items-center gap-1 text-[10px] font-semibold" style={{ color: "#2E86AB" }}>
+              <div className="flex items-center gap-1 text-[10px] font-semibold text-primary">
                 <Shield className="w-2.5 h-2.5" /> ADMIN
               </div>
             )}
@@ -76,8 +76,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
       {/* Nav links */}
       <div className="flex-1 py-5 px-3 flex flex-col gap-1 overflow-y-auto">
         <div
-          className="px-3 mb-3 text-[10px] font-bold uppercase tracking-widest"
-          style={{ color: "#9090A0" }}
+          className="px-3 mb-3 text-[10px] font-bold uppercase tracking-widest text-muted-foreground"
         >
           {isAdmin ? "Admin Portal" : "Client Portal"}
         </div>
@@ -102,8 +101,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
                   : "1px solid transparent",
                 boxShadow: isActive
                   ? "0 2px 12px rgba(46,134,171,0.12)"
-                  : "none",
-              }}
+                  : "none" }}
             >
               <Icon
                 className="w-4 h-4 transition-colors"
@@ -113,7 +111,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
               {isActive && (
                 <div
                   className="ml-auto w-1.5 h-1.5 rounded-full"
-                  style={{ background: "#2E86AB", boxShadow: "0 0 6px #2E86AB" }}
+                  
                 />
               )}
             </Link>
@@ -127,8 +125,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
       >
         <button
           onClick={logout}
-          className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 group"
-          style={{ color: "#9090A0" }}
+          className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 group text-muted-foreground"
           onMouseEnter={(e) => {
             e.currentTarget.style.color = "#EF4444";
             e.currentTarget.style.background = "rgba(239,68,68,0.08)";

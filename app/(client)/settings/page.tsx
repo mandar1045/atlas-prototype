@@ -6,9 +6,6 @@ import { User, Bell, Key, Shield, Save, RefreshCw } from "lucide-react";
 
 
 const inputStyle: React.CSSProperties = {
-  background: "rgba(42,42,62,0.7)",
-  border: "1px solid rgba(46,134,171,0.18)",
-  color: "#F0F0F0",
   borderRadius: "10px",
   padding: "10px 14px",
   fontSize: "14px",
@@ -22,15 +19,15 @@ function SectionCard({ icon: Icon, iconColor, title, description, children }: {
 }) {
   return (
     <div className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
-      <div className="px-6 py-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="px-6 py-5" >
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center"
             style={{ background: `${iconColor}18`, border: `1px solid ${iconColor}30` }}>
             <Icon className="w-4 h-4" style={{ color: iconColor }} />
           </div>
           <div>
-            <h3 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>{title}</h3>
-            <p className="text-xs" style={{ color: "#9090A0" }}>{description}</p>
+            <h3 className="text-sm font-bold text-foreground">{title}</h3>
+            <p className="text-xs text-muted-foreground">{description}</p>
           </div>
         </div>
       </div>
@@ -41,10 +38,10 @@ function SectionCard({ icon: Icon, iconColor, title, description, children }: {
 
 function Toggle({ label, sub, defaultOn = false }: { label: string; sub: string; defaultOn?: boolean }) {
   return (
-    <div className="flex items-center justify-between py-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+    <div className="flex items-center justify-between py-3" >
       <div>
-        <div className="text-sm font-medium" style={{ color: "#F0F0F0" }}>{label}</div>
-        <div className="text-xs mt-0.5" style={{ color: "#9090A0" }}>{sub}</div>
+        <div className="text-sm font-medium text-foreground">{label}</div>
+        <div className="text-xs mt-0.5 text-muted-foreground">{sub}</div>
       </div>
       <label className="relative inline-flex items-center cursor-pointer ml-4 flex-shrink-0">
         <input type="checkbox" defaultChecked={defaultOn} className="sr-only peer" />
@@ -65,10 +62,10 @@ export default function SettingsPage() {
         <div className="max-w-3xl mx-auto space-y-5">
 
           <div className="mb-6">
-            <h2 className="text-2xl font-bold tracking-tight" style={{ color: "#F0F0F0" }}>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
               Organization Settings
             </h2>
-            <p className="text-sm mt-1" style={{ color: "#9090A0" }}>
+            <p className="text-sm mt-1 text-muted-foreground">
               Manage your account preferences and API access.
             </p>
           </div>
@@ -84,7 +81,7 @@ export default function SettingsPage() {
                 { label: "Job Title",      val: "AI Research Lead",                       id: "title" },
               ].map(({ label, val, id }) => (
                 <div key={id} className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {label}
                   </label>
                   <input
@@ -97,8 +94,7 @@ export default function SettingsPage() {
               ))}
             </div>
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-              style={{ background: "linear-gradient(135deg, #2E86AB, #1a6a8a)", color: "#F0F0F0", boxShadow: "0 4px 14px rgba(46,134,171,0.30)" }}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all text-foreground"
               onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 20px rgba(46,134,171,0.48)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 14px rgba(46,134,171,0.30)"; }}
             >
@@ -120,21 +116,21 @@ export default function SettingsPage() {
             description="Manage your organization's API key for automated data retrieval.">
             <div
               className="flex items-center justify-between p-4 rounded-xl mb-3"
-              style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.07)" }}
+              
             >
-              <code className="text-sm font-mono" style={{ color: "#9090A0" }}>
+              <code className="text-sm font-mono text-muted-foreground">
                 sk_live_●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●
               </code>
               <button
                 className="flex items-center gap-1.5 ml-4 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex-shrink-0"
-                style={{ background: "rgba(245,158,11,0.12)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.25)" }}
+                
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(245,158,11,0.22)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(245,158,11,0.12)"; }}
               >
                 <RefreshCw className="w-3 h-3" /> Regenerate
               </button>
             </div>
-            <p className="text-xs" style={{ color: "#9090A0" }}>
+            <p className="text-xs text-muted-foreground">
               Do not share this key. If you suspect it has been compromised, regenerate it immediately.
             </p>
           </SectionCard>
@@ -147,7 +143,7 @@ export default function SettingsPage() {
             <div className="pt-4">
               <button
                 className="px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-                style={{ background: "rgba(239,68,68,0.10)", color: "#EF4444", border: "1px solid rgba(239,68,68,0.22)" }}
+                
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.18)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.10)"; }}
               >

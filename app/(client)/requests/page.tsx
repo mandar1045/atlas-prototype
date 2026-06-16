@@ -28,20 +28,15 @@ export default function RequestsPage() {
           {/* Header */}
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight" style={{ color: "#F0F0F0" }}>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 Custom Data Requests
               </h2>
-              <p className="text-sm mt-1" style={{ color: "#9090A0" }}>
+              <p className="text-sm mt-1 text-muted-foreground">
                 Request new dataset collections tailored to your specific AI models.
               </p>
             </div>
             <button
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
-              style={{
-                background: "linear-gradient(135deg, #2E86AB, #1a6a8a)",
-                color: "#F0F0F0",
-                boxShadow: "0 4px 16px rgba(46,134,171,0.35)",
-              }}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all text-foreground"
               onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 24px rgba(46,134,171,0.50)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 16px rgba(46,134,171,0.35)"; }}
             >
@@ -57,34 +52,30 @@ export default function RequestsPage() {
                 <div className="flex items-start gap-4">
                   <div
                     className="p-2.5 rounded-xl flex-shrink-0 mt-0.5"
-                    style={{ background: "rgba(46,134,171,0.15)", border: "1px solid rgba(46,134,171,0.25)" }}
+                    
                   >
-                    <FileText className="w-5 h-5" style={{ color: "#2E86AB" }} />
+                    <FileText className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold" style={{ color: "#F0F0F0" }}>{req.title}</h3>
-                    <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Requested on {req.date} · {req.id}</p>
+                    <h3 className="text-base font-bold text-foreground">{req.title}</h3>
+                    <p className="text-xs mt-0.5 text-muted-foreground">Requested on {req.date} · {req.id}</p>
                   </div>
                 </div>
                 <span
                   className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold flex-shrink-0"
-                  style={{
-                    color: "#F59E0B",
-                    background: "rgba(245,158,11,0.10)",
-                    border: "1px solid rgba(245,158,11,0.28)",
-                  }}
+                  
                 >
                   <Clock className="w-3.5 h-3.5" /> {req.status}
                 </span>
               </div>
 
-              <p className="text-sm mb-5 leading-relaxed" style={{ color: "#9090A0" }}>
+              <p className="text-sm mb-5 leading-relaxed text-muted-foreground">
                 {req.description}
               </p>
 
               <div
                 className="flex flex-wrap gap-6 text-sm pt-4"
-                style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                
               >
                 {[
                   { icon: Clock,        label: "Target Volume", val: req.volume },
@@ -92,9 +83,9 @@ export default function RequestsPage() {
                   { icon: Cpu,          label: "Priority",      val: req.priority },
                 ].map(({ icon: Icon, label, val }) => (
                   <div key={label} className="flex items-center gap-2">
-                    <Icon className="w-3.5 h-3.5" style={{ color: "#9090A0" }} />
-                    <span style={{ color: "#9090A0" }}>{label}:</span>
-                    <span className="font-semibold" style={{ color: "#F0F0F0" }}>{val}</span>
+                    <Icon className="w-3.5 h-3.5 text-muted-foreground" />
+                    <span className="text-muted-foreground">{label}:</span>
+                    <span className="font-semibold text-foreground">{val}</span>
                   </div>
                 ))}
               </div>
@@ -104,29 +95,20 @@ export default function RequestsPage() {
           {/* Empty state */}
           <div
             className="flex flex-col items-center justify-center p-14 text-center rounded-2xl"
-            style={{
-              background: "rgba(26,26,46,0.35)",
-              border: "1px dashed rgba(46,134,171,0.25)",
-              backdropFilter: "blur(12px)",
-            }}
+            
           >
             <div
               className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
-              style={{ background: "rgba(46,134,171,0.12)", border: "1px solid rgba(46,134,171,0.25)" }}
+              
             >
-              <FileText className="w-6 h-6" style={{ color: "#2E86AB" }} />
+              <FileText className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="text-base font-bold mb-2" style={{ color: "#F0F0F0" }}>No Other Active Requests</h3>
-            <p className="text-sm mb-6 max-w-sm" style={{ color: "#9090A0" }}>
+            <h3 className="text-base font-bold mb-2 text-foreground">No Other Active Requests</h3>
+            <p className="text-sm mb-6 max-w-sm text-muted-foreground">
               Request custom data collection campaigns if our existing library doesn't meet your requirements.
             </p>
             <button
-              className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
-              style={{
-                background: "rgba(46,134,171,0.12)",
-                border: "1px solid rgba(46,134,171,0.30)",
-                color: "#2E86AB",
-              }}
+              className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all text-primary"
               onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.22)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.12)"; }}
             >

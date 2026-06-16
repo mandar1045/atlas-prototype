@@ -39,13 +39,10 @@ const BAR_COLORS = ["#2E86AB", "#2A7695", "#25667E", "#205668", "#1B4651", "#173
 /* ─── Style helpers ─────────────────────────────────────────────────────── */
 
 const tooltipStyle = {
-  background: "rgba(10,10,16,0.95)",
-  border: "1px solid rgba(46,134,171,0.30)",
   borderRadius: "10px",
-  color: "#F0F0F0",
+  
   fontSize: "12px",
-  boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-};
+  };
 
 /* ─── Stat card ─────────────────────────────────────────────────────────── */
 function StatCard({
@@ -59,7 +56,7 @@ function StatCard({
       className="rounded-2xl p-5 flex flex-col gap-3 relative overflow-hidden bg-card border border-border shadow-sm rounded-xl"
     >
       <div className="flex items-center justify-between relative z-10">
-        <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#9090A0" }}>
+        <span className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
           {label}
         </span>
         <div
@@ -69,13 +66,13 @@ function StatCard({
           <Icon className="w-4 h-4" style={{ color: iconColor }} />
         </div>
       </div>
-      <div className="text-3xl font-extrabold relative z-10" style={{ color: "#F0F0F0" }}>
+      <div className="text-3xl font-extrabold relative z-10 text-foreground">
         {value}
       </div>
       <div className="flex items-center gap-1 text-xs relative z-10">
         {up
-          ? <TrendingUp className="w-3 h-3" style={{ color: "#22C55E" }} />
-          : <TrendingDown className="w-3 h-3" style={{ color: "#F59E0B" }} />
+          ? <TrendingUp className="w-3 h-3 text-success" />
+          : <TrendingDown className="w-3 h-3 text-warning" />
         }
         <span className="font-semibold" style={{ color: up ? "#22C55E" : "#F59E0B" }}>{sub}</span>
       </div>
@@ -128,8 +125,8 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <motion.div variants={item} className="rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <div className="mb-4">
-                <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Total Data Growth</h2>
-                <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Cumulative dataset hours ingested</p>
+                <h2 className="text-sm font-bold text-foreground">Total Data Growth</h2>
+                <p className="text-xs mt-0.5 text-muted-foreground">Cumulative dataset hours ingested</p>
               </div>
               <div className="h-[230px]">
                 {isClient ? (
@@ -150,15 +147,15 @@ export default function DashboardPage() {
                     </AreaChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex items-center justify-center h-full text-sm" style={{ color: "#9090A0" }}>Loading…</div>
+                  <div className="flex items-center justify-center h-full text-sm text-muted-foreground">Loading…</div>
                 )}
               </div>
             </motion.div>
 
             <motion.div variants={item} className="rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <div className="mb-4">
-                <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Task Distribution</h2>
-                <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Video count by task category</p>
+                <h2 className="text-sm font-bold text-foreground">Task Distribution</h2>
+                <p className="text-xs mt-0.5 text-muted-foreground">Video count by task category</p>
               </div>
               <div className="h-[230px]">
                 {isClient ? (
@@ -178,7 +175,7 @@ export default function DashboardPage() {
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex items-center justify-center h-full text-sm" style={{ color: "#9090A0" }}>Loading…</div>
+                  <div className="flex items-center justify-center h-full text-sm text-muted-foreground">Loading…</div>
                 )}
               </div>
             </motion.div>
@@ -189,16 +186,11 @@ export default function DashboardPage() {
 
             {/* Quick actions */}
             <motion.div variants={item} className="lg:col-span-1 rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
-              <h2 className="text-sm font-bold mb-4" style={{ color: "#F0F0F0" }}>Quick Actions</h2>
+              <h2 className="text-sm font-bold mb-4 text-foreground">Quick Actions</h2>
               <div className="space-y-3">
                 <Link href="/collections" className="block">
                   <button
-                    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left"
-                    style={{
-                      background: "rgba(46,134,171,0.10)",
-                      border: "1px solid rgba(46,134,171,0.22)",
-                      color: "#2E86AB",
-                    }}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left text-primary"
                     onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.18)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.10)"; }}
                   >
@@ -208,11 +200,7 @@ export default function DashboardPage() {
                 <Link href="/explorer" className="block">
                   <button
                     className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left"
-                    style={{
-                      background: "rgba(34,197,94,0.08)",
-                      border: "1px solid rgba(34,197,94,0.20)",
-                      color: "#22C55E",
-                    }}
+                    
                     onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(34,197,94,0.15)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(34,197,94,0.08)"; }}
                   >
@@ -222,22 +210,19 @@ export default function DashboardPage() {
 
                 <div
                   className="mt-4 pt-4 space-y-2"
-                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                  
                 >
-                  <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#9090A0" }}>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                     System Status
                   </div>
-                  <div className="flex items-center gap-2 text-sm" style={{ color: "#F0F0F0" }}>
+                  <div className="flex items-center gap-2 text-sm text-foreground">
                     <div className="w-2 h-2 rounded-full" style={{
-                      background: "#22C55E",
-                      boxShadow: "0 0 8px #22C55E",
-                      animation: "pulse 2s infinite",
-                    }} />
+                      animation: "pulse 2s infinite" }} />
                     <span className="text-xs">Data Pipeline Active</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Zap className="w-3 h-3" style={{ color: "#F59E0B" }} />
-                    <span className="text-xs" style={{ color: "#9090A0" }}>API Latency: 42ms</span>
+                    <Zap className="w-3 h-3 text-warning" />
+                    <span className="text-xs text-muted-foreground">API Latency: 42ms</span>
                   </div>
                 </div>
               </div>
@@ -245,18 +230,17 @@ export default function DashboardPage() {
 
             {/* Recent ingestion queue */}
             <motion.div variants={item} className="lg:col-span-3 rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
-              <div className="px-5 pt-5 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Recent Ingestion Queue</h2>
-                <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Latest videos added to your collections</p>
+              <div className="px-5 pt-5 pb-3" >
+                <h2 className="text-sm font-bold text-foreground">Recent Ingestion Queue</h2>
+                <p className="text-xs mt-0.5 text-muted-foreground">Latest videos added to your collections</p>
               </div>
               <table className="w-full text-sm">
                 <thead>
-                  <tr style={{ background: "rgba(0,0,0,0.20)" }}>
+                  <tr >
                     {["Video ID", "Tasks", "Duration", "Date", "QA Status"].map((h, i) => (
                       <th
                         key={h}
-                        className={`px-5 py-3 text-xs font-bold uppercase tracking-wider ${i === 4 ? "text-right" : "text-left"}`}
-                        style={{ color: "#9090A0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                        className={`px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground ${i === 4 ? "text-right" : "text-left"}`}
                       >
                         {h}
                       </th>
@@ -272,7 +256,7 @@ export default function DashboardPage() {
                       onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,134,171,0.05)")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                     >
-                      <td className="px-5 py-3 font-mono font-semibold text-xs" style={{ color: "#2E86AB" }}>
+                      <td className="px-5 py-3 font-mono font-semibold text-xs text-primary">
                         {video.video_id}
                       </td>
                       <td className="px-5 py-3">
@@ -280,26 +264,24 @@ export default function DashboardPage() {
                           {video.task_type.slice(0, 2).map((task, j) => (
                             <span
                               key={j}
-                              className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                              style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}
+                              className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary"
                             >
                               {task}
                             </span>
                           ))}
                           {video.task_type.length > 2 && (
                             <span
-                              className="px-1.5 py-0.5 rounded text-[10px]"
-                              style={{ background: "rgba(144,144,160,0.10)", color: "#9090A0" }}
+                              className="px-1.5 py-0.5 rounded text-[10px] text-muted-foreground"
                             >
                               +{video.task_type.length - 2}
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="px-5 py-3 font-mono text-xs" style={{ color: "#F0F0F0" }}>
+                      <td className="px-5 py-3 font-mono text-xs text-foreground">
                         {video.video_length}
                       </td>
-                      <td className="px-5 py-3 text-xs" style={{ color: "#9090A0" }}>
+                      <td className="px-5 py-3 text-xs text-muted-foreground">
                         {video.recording_date}
                       </td>
                       <td className="px-5 py-3 text-right">
@@ -307,8 +289,8 @@ export default function DashboardPage() {
                           className="px-2.5 py-1 rounded-full text-[10px] font-semibold"
                           style={
                             video.qa_status === "Verified"
-                              ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.22)" }
-                              : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.22)" }
+                              ? { }
+                              : { }
                           }
                         >
                           {video.qa_status}

@@ -130,16 +130,12 @@ export default function LoginPage() {
           {/* Glassmorphism card */}
           <div
             className="rounded-2xl p-8"
-            style={{
-              background: "#121212",
-              border: "1px solid #27272A",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-            }}
+            
           >
             {/* ── Pill toggle ── */}
             <div
               className="flex rounded-xl p-1 mb-8"
-              style={{ background: "#0A0A0A", border: "1px solid #27272A" }}
+              
             >
               {(["client", "admin"] as const).map((tab) => {
                 const isActive = activeTab === tab;
@@ -155,8 +151,7 @@ export default function LoginPage() {
                       background: isActive
                         ? "#0070F3"
                         : "transparent",
-                      boxShadow: isActive ? "0 4px 14px rgba(0,112,243,0.35)" : "none",
-                    }}
+                      boxShadow: isActive ? "0 4px 14px rgba(0,112,243,0.35)" : "none" }}
                   >
                     <Icon className="w-4 h-4" />
                     {tab === "client" ? "Client Login" : "Admin Login"}
@@ -199,12 +194,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full h-11 rounded-lg px-4 text-sm outline-none transition-all duration-200"
-                  style={{
-                    background: "rgba(42,42,62,0.8)",
-                    border: "1px solid #2A2A3E",
-                    color: "#F0F0F0",
-                  }}
+                  className="w-full h-11 rounded-lg px-4 text-sm outline-none transition-all duration-200 text-foreground"
                   onFocus={(e) => (e.currentTarget.style.borderColor = "#2E86AB")}
                   onBlur={(e) => (e.currentTarget.style.borderColor = "#2A2A3E")}
                 />
@@ -227,11 +217,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full h-11 rounded-lg px-4 text-sm outline-none transition-all duration-200"
-                  style={{
-                    background: "#0A0A0A",
-                    border: "1px solid #27272A",
-                    color: "#FAFAFA",
-                  }}
+                  
                   onFocus={(e) => (e.currentTarget.style.borderColor = "#0070F3")}
                   onBlur={(e) => (e.currentTarget.style.borderColor = "#27272A")}
                 />
@@ -240,11 +226,7 @@ export default function LoginPage() {
               {error && (
                 <div
                   className="text-sm font-medium p-3 rounded-lg"
-                  style={{
-                    color: "#EF4444",
-                    background: "rgba(239,68,68,0.1)",
-                    border: "1px solid rgba(239,68,68,0.2)",
-                  }}
+                  
                 >
                   {error}
                 </div>
@@ -255,11 +237,7 @@ export default function LoginPage() {
                 type="submit"
                 disabled={isLoading}
                 className="w-full h-11 rounded-lg text-base font-semibold transition-all duration-200 mt-4 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                style={{
-                  background: "#0070F3",
-                  color: "#FFFFFF",
-                  boxShadow: "0 4px 20px rgba(0,112,243,0.35)",
-                }}
+                
               >
                 {isLoading ? (
                   <>

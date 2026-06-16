@@ -41,13 +41,13 @@ const ingestionTrend = [
 ];
 
 const piiBreakdown = [
-  { name: "No PII",           value: 10, color: "#22C55E" },
-  { name: "Blur Required",    value: 2,  color: "#F59E0B" },
+  { name: "No PII",           value: 10, color: "var(--success)" },
+  { name: "Blur Required",    value: 2,  color: "var(--warning)" },
 ];
 
 const qaBreakdown = [
-  { name: "Verified",  value: 10, color: "#22C55E" },
-  { name: "Pending",   value: 2,  color: "#F59E0B" },
+  { name: "Verified",  value: 10, color: "var(--success)" },
+  { name: "Pending",   value: 2,  color: "var(--warning)" },
 ];
 
 const taskDist = [
@@ -63,10 +63,8 @@ const taskDist = [
 
 
 const tooltipStyle = {
-  background: "rgba(15,15,20,0.95)",
-  border: "1px solid rgba(46,134,171,0.30)",
   borderRadius: "8px",
-  color: "#F0F0F0",
+  
   fontSize: "12px",
 };
 
@@ -83,7 +81,7 @@ function StatCard({
     >
 
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#9090A0" }}>
+        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           {label}
         </span>
         <div
@@ -93,12 +91,12 @@ function StatCard({
           <Icon className="w-4 h-4" style={{ color: iconColor }} />
         </div>
       </div>
-      <div className="text-3xl font-bold" style={{ color: "#F0F0F0" }}>{value}</div>
+      <div className="text-3xl font-bold text-foreground">{value}</div>
       <div className="flex items-center gap-1 text-xs">
         {subUp ? (
-          <TrendingUp className="w-3 h-3" style={{ color: "#22C55E" }} />
+          <TrendingUp className="w-3 h-3 text-success" />
         ) : (
-          <TrendingDown className="w-3 h-3" style={{ color: "#F59E0B" }} />
+          <TrendingDown className="w-3 h-3 text-warning" />
         )}
         <span style={{ color: subUp ? "#22C55E" : "#F59E0B" }} className="font-medium">{sub}</span>
       </div>
@@ -110,8 +108,8 @@ function StatCard({
 function SectionHeader({ title, sub }: { title: string; sub?: string }) {
   return (
     <div className="mb-4">
-      <h2 className="text-base font-bold" style={{ color: "#F0F0F0" }}>{title}</h2>
-      {sub && <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>{sub}</p>}
+      <h2 className="text-base font-bold text-foreground">{title}</h2>
+      {sub && <p className="text-xs mt-0.5 text-muted-foreground">{sub}</p>}
     </div>
   );
 }
@@ -119,17 +117,16 @@ function SectionHeader({ title, sub }: { title: string; sub?: string }) {
 /* ─── Status badge ─────────────────────────────────────────────────────────── */
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { color: string; bg: string; border: string; Icon: React.ElementType }> = {
-    Active:   { color: "#22C55E", bg: "rgba(34,197,94,0.10)",  border: "rgba(34,197,94,0.25)",  Icon: CheckCircle2 },
-    Approved: { color: "#22C55E", bg: "rgba(34,197,94,0.10)",  border: "rgba(34,197,94,0.25)",  Icon: CheckCircle2 },
-    Pending:  { color: "#F59E0B", bg: "rgba(245,158,11,0.10)", border: "rgba(245,158,11,0.25)", Icon: Clock },
-    Rejected: { color: "#EF4444", bg: "rgba(239,68,68,0.10)",  border: "rgba(239,68,68,0.25)",  Icon: XCircle },
+    Active:   { color: "text-success", bg: "bg-success/10", border: "border-success/20",  Icon: CheckCircle2 },
+    Approved: { color: "text-success", bg: "bg-success/10", border: "border-success/20",  Icon: CheckCircle2 },
+    Pending:  { color: "text-warning", bg: "bg-warning/10", border: "border-warning/20", Icon: Clock },
+    Rejected: { color: "text-destructive", bg: "bg-destructive/10", border: "border-destructive/20",  Icon: XCircle },
   };
   const s = map[status] ?? map["Pending"];
   const S = s.Icon;
   return (
     <span
-      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
-      style={{ color: s.color, background: s.bg, border: `1px solid ${s.border}` }}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${s.color} ${s.bg} border ${s.border}`}
     >
       <S className="w-3 h-3" />
       {status}
@@ -171,11 +168,7 @@ export default function AdminPage() {
             <motion.div
               variants={item}
               className="flex items-center gap-3 px-5 py-3 rounded-xl text-sm font-medium"
-              style={{
-                background: "rgba(245,158,11,0.08)",
-                border: "1px solid rgba(245,158,11,0.30)",
-                color: "#F59E0B",
-              }}
+              
             >
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>
@@ -216,7 +209,7 @@ export default function AdminPage() {
                     </AreaChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex items-center justify-center h-full text-sm" style={{ color: "#9090A0" }}>
+                  <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
                     Loading…
                   </div>
                 )}
@@ -245,7 +238,7 @@ export default function AdminPage() {
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex items-center justify-center h-full text-sm" style={{ color: "#9090A0" }}>Loading…</div>
+                  <div className="flex items-center justify-center h-full text-sm text-muted-foreground">Loading…</div>
                 )}
               </div>
             </motion.div>
@@ -265,10 +258,10 @@ export default function AdminPage() {
                       <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: d.color }} />
                       <div className="flex-1">
                         <div className="flex justify-between text-sm mb-1">
-                          <span style={{ color: "#F0F0F0" }}>{d.name}</span>
+                          <span className="text-foreground">{d.name}</span>
                           <span className="font-bold" style={{ color: d.color }}>{d.value}</span>
                         </div>
-                        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+                        <div className="h-1.5 rounded-full overflow-hidden" >
                           <div
                             className="h-full rounded-full transition-all"
                             style={{ width: `${(d.value / totalVideos) * 100}%`, background: d.color, boxShadow: `0 0 8px ${d.color}60` }}
@@ -277,7 +270,7 @@ export default function AdminPage() {
                       </div>
                     </div>
                   ))}
-                  <p className="text-xs pt-1" style={{ color: "#9090A0" }}>
+                  <p className="text-xs pt-1 text-muted-foreground">
                     Total: {totalVideos} videos
                   </p>
                 </div>
@@ -290,20 +283,18 @@ export default function AdminPage() {
             <div className="flex items-center justify-between px-6 pt-5 pb-4">
               <SectionHeader title="Client Organizations" sub={`${MOCK_ORGS.length} registered orgs`} />
               <button
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
-                style={{ background: "rgba(46,134,171,0.15)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.30)" }}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-primary"
               >
                 <Building2 className="w-3 h-3" /> Manage
               </button>
             </div>
             <table className="w-full text-sm">
               <thead>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.2)" }}>
+                <tr >
                   {["Organization", "Plan", "Videos", "Joined", "Status", ""].map((h) => (
                     <th
                       key={h}
-                      className={`px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider ${h === "" ? "text-right" : ""}`}
-                      style={{ color: "#9090A0" }}
+                      className={`px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground ${h === "" ? "text-right" : ""}`}
                     >
                       {h}
                     </th>
@@ -316,20 +307,18 @@ export default function AdminPage() {
                     key={org.id}
                     className="transition-colors"
                     style={{
-                      borderBottom: i < MOCK_ORGS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                    }}
+                      borderBottom: i < MOCK_ORGS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,134,171,0.05)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
                     <td className="px-6 py-3.5">
                       <div className="flex items-center gap-3">
                         <div
-                          className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
-                          style={{ background: "rgba(46,134,171,0.15)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.25)" }}
+                          className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-primary"
                         >
                           {org.name[0]}
                         </div>
-                        <span className="font-medium" style={{ color: "#F0F0F0" }}>{org.name}</span>
+                        <span className="font-medium text-foreground">{org.name}</span>
                       </div>
                     </td>
                     <td className="px-6 py-3.5">
@@ -337,22 +326,21 @@ export default function AdminPage() {
                         className="px-2 py-0.5 rounded text-xs font-semibold"
                         style={
                           org.plan === "Enterprise"
-                            ? { color: "#A78BFA", background: "rgba(167,139,250,0.12)", border: "1px solid rgba(167,139,250,0.25)" }
+                            ? { }
                             : org.plan === "Pro"
-                            ? { color: "#2E86AB", background: "rgba(46,134,171,0.12)", border: "1px solid rgba(46,134,171,0.25)" }
-                            : { color: "#9090A0", background: "rgba(144,144,160,0.10)", border: "1px solid rgba(144,144,160,0.20)" }
+                            ? { }
+                            : { }
                         }
                       >
                         {org.plan}
                       </span>
                     </td>
-                    <td className="px-6 py-3.5 font-mono text-sm" style={{ color: "#F0F0F0" }}>{org.videos}</td>
-                    <td className="px-6 py-3.5 text-sm" style={{ color: "#9090A0" }}>{org.joined}</td>
+                    <td className="px-6 py-3.5 font-mono text-sm text-foreground">{org.videos}</td>
+                    <td className="px-6 py-3.5 text-sm text-muted-foreground">{org.joined}</td>
                     <td className="px-6 py-3.5"><StatusBadge status={org.status} /></td>
                     <td className="px-6 py-3.5 text-right">
                       <button
-                        className="p-1.5 rounded-lg transition-colors"
-                        style={{ color: "#9090A0" }}
+                        className="p-1.5 rounded-lg transition-colors text-muted-foreground"
                         onMouseEnter={(e) => { e.currentTarget.style.color = "#2E86AB"; e.currentTarget.style.background = "rgba(46,134,171,0.10)"; }}
                         onMouseLeave={(e) => { e.currentTarget.style.color = "#9090A0"; e.currentTarget.style.background = "transparent"; }}
                       >
@@ -373,7 +361,7 @@ export default function AdminPage() {
                 {MOCK_REQUESTS.filter(r => r.status === "Pending").length > 0 && (
                   <span
                     className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full"
-                    style={{ background: "rgba(245,158,11,0.12)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.30)" }}
+                    
                   >
                     <AlertCircle className="w-3 h-3" />
                     {MOCK_REQUESTS.filter(r => r.status === "Pending").length} pending
@@ -383,12 +371,11 @@ export default function AdminPage() {
             </div>
             <table className="w-full text-sm">
               <thead>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.2)" }}>
+                <tr >
                   {["Request ID", "Organization", "Collection", "Size", "Date", "Status", ""].map((h) => (
                     <th
                       key={h}
-                      className={`px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider ${h === "" ? "text-right" : ""}`}
-                      style={{ color: "#9090A0" }}
+                      className={`px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground ${h === "" ? "text-right" : ""}`}
                     >
                       {h}
                     </th>
@@ -404,30 +391,30 @@ export default function AdminPage() {
                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,134,171,0.05)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
-                    <td className="px-6 py-3.5 font-mono font-semibold text-xs" style={{ color: "#2E86AB" }}>{req.id}</td>
-                    <td className="px-6 py-3.5 font-medium" style={{ color: "#F0F0F0" }}>{req.org}</td>
-                    <td className="px-6 py-3.5 max-w-[200px] truncate text-xs" style={{ color: "#9090A0" }}>{req.collection}</td>
-                    <td className="px-6 py-3.5 font-mono text-xs" style={{ color: "#F0F0F0" }}>{req.size}</td>
-                    <td className="px-6 py-3.5 text-xs" style={{ color: "#9090A0" }}>{req.date}</td>
+                    <td className="px-6 py-3.5 font-mono font-semibold text-xs text-primary">{req.id}</td>
+                    <td className="px-6 py-3.5 font-medium text-foreground">{req.org}</td>
+                    <td className="px-6 py-3.5 max-w-[200px] truncate text-xs text-muted-foreground">{req.collection}</td>
+                    <td className="px-6 py-3.5 font-mono text-xs text-foreground">{req.size}</td>
+                    <td className="px-6 py-3.5 text-xs text-muted-foreground">{req.date}</td>
                     <td className="px-6 py-3.5"><StatusBadge status={req.status} /></td>
                     <td className="px-6 py-3.5 text-right">
                       {req.status === "Pending" ? (
                         <div className="flex items-center justify-end gap-2">
                           <button
                             className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-                            style={{ background: "rgba(34,197,94,0.12)", color: "#22C55E", border: "1px solid rgba(34,197,94,0.25)" }}
+                            
                           >
                             Approve
                           </button>
                           <button
                             className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-                            style={{ background: "rgba(239,68,68,0.10)", color: "#EF4444", border: "1px solid rgba(239,68,68,0.20)" }}
+                            
                           >
                             Reject
                           </button>
                         </div>
                       ) : (
-                        <span className="text-xs" style={{ color: "#9090A0" }}>—</span>
+                        <span className="text-xs text-muted-foreground">—</span>
                       )}
                     </td>
                   </tr>
@@ -441,8 +428,7 @@ export default function AdminPage() {
             <div className="flex items-center justify-between px-6 pt-5 pb-4">
               <SectionHeader title="Recent Ingestion Queue" sub="Latest videos through the pipeline" />
               <button
-                className="flex items-center gap-1.5 text-xs font-semibold transition-all"
-                style={{ color: "#9090A0" }}
+                className="flex items-center gap-1.5 text-xs font-semibold transition-all text-muted-foreground"
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#2E86AB")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#9090A0")}
               >
@@ -451,9 +437,9 @@ export default function AdminPage() {
             </div>
             <table className="w-full text-sm">
               <thead>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.2)" }}>
+                <tr >
                   {["Video ID", "Worker", "Tasks", "Duration", "File Size", "PII", "QA"].map((h) => (
-                    <th key={h} className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>
+                    <th key={h} className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       {h}
                     </th>
                   ))}
@@ -468,38 +454,36 @@ export default function AdminPage() {
                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,134,171,0.05)")}
                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                   >
-                    <td className="px-5 py-3 font-mono font-semibold text-xs" style={{ color: "#2E86AB" }}>{v.video_id}</td>
-                    <td className="px-5 py-3 font-mono text-xs" style={{ color: "#9090A0" }}>{v.worker_id}</td>
+                    <td className="px-5 py-3 font-mono font-semibold text-xs text-primary">{v.video_id}</td>
+                    <td className="px-5 py-3 font-mono text-xs text-muted-foreground">{v.worker_id}</td>
                     <td className="px-5 py-3">
                       <div className="flex flex-wrap gap-1">
                         {v.task_type.slice(0, 2).map((t, j) => (
                           <span
                             key={j}
-                            className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                            style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}
+                            className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary"
                           >
                             {t}
                           </span>
                         ))}
                         {v.task_type.length > 2 && (
                           <span
-                            className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                            style={{ background: "rgba(144,144,160,0.10)", color: "#9090A0" }}
+                            className="px-1.5 py-0.5 rounded text-[10px] font-medium text-muted-foreground"
                           >
                             +{v.task_type.length - 2}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="px-5 py-3 font-mono text-xs" style={{ color: "#F0F0F0" }}>{v.video_length}</td>
-                    <td className="px-5 py-3 font-mono text-xs" style={{ color: "#9090A0" }}>{v.file_size}</td>
+                    <td className="px-5 py-3 font-mono text-xs text-foreground">{v.video_length}</td>
+                    <td className="px-5 py-3 font-mono text-xs text-muted-foreground">{v.file_size}</td>
                     <td className="px-5 py-3">
                       <span
                         className="px-2 py-0.5 rounded-full text-[10px] font-semibold"
                         style={
                           v.pii_check_status === "No PII"
-                            ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.20)" }
-                            : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.20)" }
+                            ? { }
+                            : { }
                         }
                       >
                         {v.pii_check_status === "No PII" ? "Clean" : "⚠ Blur"}
@@ -510,8 +494,8 @@ export default function AdminPage() {
                         className="px-2 py-0.5 rounded-full text-[10px] font-semibold"
                         style={
                           v.qa_status === "Verified"
-                            ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.20)" }
-                            : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.20)" }
+                            ? { }
+                            : { }
                         }
                       >
                         {v.qa_status}
@@ -528,8 +512,8 @@ export default function AdminPage() {
             variants={item}
             className="rounded-2xl px-6 py-4 flex flex-wrap items-center gap-6 bg-muted/50 border border-border rounded-xl"
           >
-            <div className="flex items-center gap-2 text-xs font-medium" style={{ color: "#9090A0" }}>
-              <Activity className="w-3.5 h-3.5" style={{ color: "#2E86AB" }} />
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <Activity className="w-3.5 h-3.5 text-primary" />
               System Health
             </div>
             {[
@@ -539,7 +523,7 @@ export default function AdminPage() {
               { label: "Delivery CDN",    ok: true  },
               { label: "Auth Service",    ok: true  },
             ].map(({ label, ok }) => (
-              <div key={label} className="flex items-center gap-1.5 text-xs" style={{ color: "#9090A0" }}>
+              <div key={label} className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <div
                   className="w-2 h-2 rounded-full"
                   style={{ background: ok ? "#22C55E" : "#EF4444", boxShadow: `0 0 6px ${ok ? "#22C55E" : "#EF4444"}` }}
@@ -547,7 +531,7 @@ export default function AdminPage() {
                 {label}
               </div>
             ))}
-            <span className="ml-auto text-xs" style={{ color: "#9090A0" }}>
+            <span className="ml-auto text-xs text-muted-foreground">
               Last sync: {new Date().toLocaleTimeString()}
             </span>
           </motion.div>

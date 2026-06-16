@@ -40,48 +40,48 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
-/* ─── Ultra-clean Professional Dark Theme ─── */
+/* ─── Ultra-clean Professional Light Theme ─── */
 :root {
-  --background:            #0A0A0A;
-  --foreground:            #FAFAFA;
+  --background:            #FAFAFA;
+  --foreground:            #09090B;
 
-  --card:                  #121212;
-  --card-foreground:       #FAFAFA;
+  --card:                  #FFFFFF;
+  --card-foreground:       #09090B;
 
-  --popover:               #121212;
-  --popover-foreground:    #FAFAFA;
+  --popover:               #FFFFFF;
+  --popover-foreground:    #09090B;
 
-  --surface:               #121212;
+  --surface:               #FFFFFF;
 
   --primary:               #0070F3;
   --primary-foreground:    #FFFFFF;
 
-  --secondary:             #27272A;
-  --secondary-foreground:  #FAFAFA;
+  --secondary:             #F4F4F5;
+  --secondary-foreground:  #09090B;
 
-  --muted:                 #18181B;
-  --muted-foreground:      #A1A1AA;
+  --muted:                 #F4F4F5;
+  --muted-foreground:      #71717A;
 
-  --accent:                #27272A;
-  --accent-foreground:     #FAFAFA;
+  --accent:                #F4F4F5;
+  --accent-foreground:     #09090B;
 
   --destructive:           #EF4444;
   --destructive-foreground: #FAFAFA;
 
-  --border:                #27272A;
-  --input:                 #27272A;
+  --border:                #E4E4E7;
+  --input:                 #E4E4E7;
   --ring:                  #0070F3;
 
-  --radius: 0.375rem;
+  --radius: 0.5rem;
 
   /* Sidebar tokens */
-  --sidebar:                    #0A0A0A;
-  --sidebar-foreground:         #A1A1AA;
+  --sidebar:                    #FAFAFA;
+  --sidebar-foreground:         #71717A;
   --sidebar-primary:            #0070F3;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent:             #18181B;
-  --sidebar-accent-foreground:  #FAFAFA;
-  --sidebar-border:             #27272A;
+  --sidebar-accent:             #F4F4F5;
+  --sidebar-accent-foreground:  #09090B;
+  --sidebar-border:             #E4E4E7;
   --sidebar-ring:               #0070F3;
 
   /* Semantic helpers */

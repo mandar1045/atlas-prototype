@@ -94,15 +94,11 @@ export default function ExplorerPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Filter Panel */}
-        <div className="w-64 flex flex-col" style={{
-          background: "rgba(15,15,20,0.85)",
-          backdropFilter: "blur(16px)",
-          borderRight: "1px solid rgba(46,134,171,0.14)",
-        }}>
-          <div className="p-4 flex justify-between items-center" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-            <h2 className="font-semibold text-sm" style={{ color: "#F0F0F0" }}>Filters</h2>
+        <div className="w-64 flex flex-col" >
+          <div className="p-4 flex justify-between items-center" >
+            <h2 className="font-semibold text-sm text-foreground">Filters</h2>
             {activeFilterCount > 0 && (
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "rgba(46,134,171,0.15)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.28)" }}>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full text-primary">
                 {activeFilterCount} active
               </span>
             )}
@@ -113,7 +109,7 @@ export default function ExplorerPage() {
               
               {/* Task Type Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>Task Type</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Task Type</h3>
                 <div className="space-y-2">
                   {allTasks.map(task => (
                     <label
@@ -125,12 +121,11 @@ export default function ExplorerPage() {
                         className="w-4 h-4 rounded flex items-center justify-center transition-all"
                         style={{
                           background: selectedTasks.has(task) ? "#2E86AB" : "rgba(42,42,62,0.8)",
-                          border: selectedTasks.has(task) ? "1px solid #2E86AB" : "1px solid rgba(46,134,171,0.22)",
-                        }}
+                          border: selectedTasks.has(task) ? "1px solid #2E86AB" : "1px solid rgba(46,134,171,0.22)" }}
                       >
-                        {selectedTasks.has(task) && <CheckCircle2 className="w-3 h-3" style={{ color: "#F0F0F0" }} />}
+                        {selectedTasks.has(task) && <CheckCircle2 className="w-3 h-3 text-foreground" />}
                       </div>
-                      <span className="text-sm" style={{ color: "#F0F0F0" }}>{task}</span>
+                      <span className="text-sm text-foreground">{task}</span>
                     </label>
                   ))}
                 </div>
@@ -138,7 +133,7 @@ export default function ExplorerPage() {
 
               {/* Frame Rate Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>Frame Rate</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Frame Rate</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "30fps", "60fps"].map(fps => (
                     <button
@@ -147,8 +142,7 @@ export default function ExplorerPage() {
                       style={{
                         background: selectedFps === fps ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
                         color: selectedFps === fps ? "#2E86AB" : "#9090A0",
-                        border: selectedFps === fps ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)",
-                      }}
+                        border: selectedFps === fps ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)" }}
                       onClick={() => setSelectedFps(fps)}
                     >
                       {fps}
@@ -159,7 +153,7 @@ export default function ExplorerPage() {
 
               {/* Resolution Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>Resolution</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Resolution</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "1080p", "720p"].map(res => (
                     <button
@@ -168,8 +162,7 @@ export default function ExplorerPage() {
                       style={{
                         background: selectedResolution === res ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
                         color: selectedResolution === res ? "#2E86AB" : "#9090A0",
-                        border: selectedResolution === res ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)",
-                      }}
+                        border: selectedResolution === res ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)" }}
                       onClick={() => setSelectedResolution(res)}
                     >
                       {res}
@@ -180,7 +173,7 @@ export default function ExplorerPage() {
 
               {/* PII Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>PII Status</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">PII Status</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "No PII", "Blurred Required"].map(pii => (
                     <button
@@ -189,8 +182,7 @@ export default function ExplorerPage() {
                       style={{
                         background: selectedPii === pii ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
                         color: selectedPii === pii ? "#2E86AB" : "#9090A0",
-                        border: selectedPii === pii ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)",
-                      }}
+                        border: selectedPii === pii ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)" }}
                       onClick={() => setSelectedPii(pii)}
                     >
                       {pii}
@@ -200,9 +192,9 @@ export default function ExplorerPage() {
               </div>
 
               {/* Hands Visible */}
-              <div className="space-y-3 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="space-y-3 pt-2" >
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium" style={{ color: "#F0F0F0" }}>Hands Visible Only</h3>
+                  <h3 className="text-sm font-medium text-foreground">Hands Visible Only</h3>
                   <Switch checked={handsVisibleOnly} onCheckedChange={setHandsVisibleOnly} />
                 </div>
               </div>
@@ -211,10 +203,10 @@ export default function ExplorerPage() {
           </ScrollArea>
 
           {activeFilterCount > 0 && (
-            <div className="p-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="p-4" >
               <button
                 className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-semibold transition-all"
-                style={{ background: "rgba(239,68,68,0.10)", color: "#EF4444", border: "1px solid rgba(239,68,68,0.20)" }}
+                
                 onClick={clearFilters}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.18)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.10)"; }}
@@ -231,16 +223,10 @@ export default function ExplorerPage() {
           {/* Top Bar */}
           <div className="p-6 pb-0 space-y-4">
             <div className="relative">
-              <Search className="absolute left-3.5 top-3.5 h-4 w-4" style={{ color: "#9090A0" }} />
+              <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-muted-foreground" />
               <input
                 placeholder="Search by task, environment, video ID…"
-                className="w-full h-12 pl-10 pr-4 rounded-xl text-sm outline-none transition-all"
-                style={{
-                  background: "rgba(26,26,46,0.60)",
-                  backdropFilter: "blur(12px)",
-                  border: "1px solid rgba(46,134,171,0.18)",
-                  color: "#F0F0F0",
-                }}
+                className="w-full h-12 pl-10 pr-4 rounded-xl text-sm outline-none transition-all text-foreground"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={(e) => (e.currentTarget.style.borderColor = "#2E86AB")}
@@ -249,17 +235,16 @@ export default function ExplorerPage() {
             </div>
 
             <div className="flex justify-between items-center text-sm">
-              <p style={{ color: "#9090A0" }}>Showing 1–{filteredVideos.length} of {MOCK_VIDEOS.length} videos</p>
+              <p className="text-muted-foreground">Showing 1–{filteredVideos.length} of {MOCK_VIDEOS.length} videos</p>
 
-              <div className="flex items-center gap-1 p-1 rounded-xl" style={{ background: "rgba(26,26,46,0.70)", border: "1px solid rgba(46,134,171,0.15)" }}>
+              <div className="flex items-center gap-1 p-1 rounded-xl" >
                 {(["grid", "list"] as const).map((m) => (
                   <button
                     key={m}
                     className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
                     style={{
                       background: viewMode === m ? "rgba(46,134,171,0.20)" : "transparent",
-                      color: viewMode === m ? "#2E86AB" : "#9090A0",
-                    }}
+                      color: viewMode === m ? "#2E86AB" : "#9090A0" }}
                     onClick={() => setViewMode(m)}
                   >
                     {m === "grid" ? <Grid className="h-4 w-4" /> : <List className="h-4 w-4" />}
@@ -279,16 +264,15 @@ export default function ExplorerPage() {
                   className="flex flex-col items-center justify-center h-64 text-center space-y-4"
                 >
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                    style={{ background: "rgba(46,134,171,0.12)", border: "1px solid rgba(46,134,171,0.25)" }}>
-                    <Search className="h-8 w-8" style={{ color: "#2E86AB" }} />
+                    >
+                    <Search className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold" style={{ color: "#F0F0F0" }}>No videos found</h3>
-                    <p className="text-sm mt-1" style={{ color: "#9090A0" }}>Try adjusting your filters or search query.</p>
+                    <h3 className="text-lg font-semibold text-foreground">No videos found</h3>
+                    <p className="text-sm mt-1 text-muted-foreground">Try adjusting your filters or search query.</p>
                   </div>
                   <button
-                    className="px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-                    style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.28)" }}
+                    className="px-4 py-2 rounded-xl text-sm font-semibold transition-all text-primary"
                     onClick={clearFilters}
                   >Clear all filters</button>
                 </motion.div>
@@ -315,9 +299,6 @@ export default function ExplorerPage() {
                         className="block group"
                         style={viewMode === "list" ? {
                           display: "flex", gap: "1.5rem", alignItems: "center",
-                          background: "rgba(26,26,46,0.55)",
-                          backdropFilter: "blur(16px)",
-                          border: "1px solid rgba(46,134,171,0.15)",
                           borderRadius: "16px",
                           padding: "16px",
                           transition: "border-color 0.2s",
@@ -330,9 +311,7 @@ export default function ExplorerPage() {
                           className={`relative overflow-hidden ${viewMode === "grid" ? "aspect-video mb-3" : "aspect-video shrink-0"}`}
                           style={{
                             borderRadius: "12px",
-                            border: "1px solid rgba(46,134,171,0.15)",
-                            width: viewMode === "list" ? "240px" : undefined,
-                          }}
+                            width: viewMode === "list" ? "240px" : undefined }}
                         >
                           <img src={video.thumbnail_url} alt={video.video_id}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -340,7 +319,7 @@ export default function ExplorerPage() {
 
                           {/* Duration */}
                           <div className="absolute bottom-2 left-2 text-white text-xs font-mono px-2 py-0.5 rounded-md"
-                            style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}>
+                            >
                             {video.video_length}
                           </div>
 
@@ -348,12 +327,12 @@ export default function ExplorerPage() {
                           <div className="absolute top-2 right-2">
                             {video.qa_status === "Verified" ? (
                               <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"
-                                style={{ background: "rgba(34,197,94,0.85)", color: "#000" }}>
+                                >
                                 <CheckCircle2 className="w-3 h-3" /> VERIFIED
                               </div>
                             ) : (
                               <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"
-                                style={{ background: "rgba(245,158,11,0.85)", color: "#000" }}>
+                                >
                                 <AlertCircle className="w-3 h-3" /> PENDING
                               </div>
                             )}
@@ -362,8 +341,8 @@ export default function ExplorerPage() {
                           {/* Play hover */}
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                             <div className="w-12 h-12 rounded-full flex items-center justify-center"
-                              style={{ background: "rgba(46,134,171,0.90)", boxShadow: "0 4px 20px rgba(46,134,171,0.50)" }}>
-                              <Play className="w-5 h-5 ml-0.5" style={{ color: "#F0F0F0" }} />
+                              >
+                              <Play className="w-5 h-5 ml-0.5 text-foreground" />
                             </div>
                           </div>
                         </div>
@@ -373,28 +352,27 @@ export default function ExplorerPage() {
                           {viewMode === "grid" && (
                             <div
                               className="rounded-xl p-3 space-y-2"
-                              style={{ background: "rgba(26,26,46,0.55)", backdropFilter: "blur(12px)", border: "1px solid rgba(46,134,171,0.14)" }}
+                              
                             >
                               <div className="flex items-center justify-between">
-                                <span className="font-mono text-xs font-semibold" style={{ color: "#2E86AB" }}>{video.video_id}</span>
+                                <span className="font-mono text-xs font-semibold text-primary">{video.video_id}</span>
                                 <span
                                   className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
                                   style={video.pii_check_status === "No PII"
-                                    ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.22)" }
-                                    : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.22)" }
+                                    ? { }
+                                    : { }
                                   }>
                                   {video.pii_check_status}
                                 </span>
                               </div>
                               <div className="flex flex-wrap gap-1">
                                 {video.task_type.map((task, i) => (
-                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                                    style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}>
+                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary">
                                     {task}
                                   </span>
                                 ))}
                               </div>
-                              <div className="flex items-center gap-3 text-xs" style={{ color: "#9090A0" }}>
+                              <div className="flex items-center gap-3 text-xs text-muted-foreground">
                                 <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{video.environment}</span>
                                 <span className="flex items-center gap-1"><VideoIcon className="w-3 h-3" />{video.resolution} · {video.frame_rate}</span>
                               </div>
@@ -403,25 +381,24 @@ export default function ExplorerPage() {
                           {viewMode === "list" && (
                             <>
                               <div className="flex items-center justify-between">
-                                <span className="font-mono text-xs font-semibold" style={{ color: "#2E86AB" }}>{video.video_id}</span>
+                                <span className="font-mono text-xs font-semibold text-primary">{video.video_id}</span>
                                 <span
                                   className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
                                   style={video.pii_check_status === "No PII"
-                                    ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.22)" }
-                                    : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.22)" }
+                                    ? { }
+                                    : { }
                                   }>
                                   {video.pii_check_status}
                                 </span>
                               </div>
                               <div className="flex flex-wrap gap-1">
                                 {video.task_type.map((task, i) => (
-                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                                    style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}>
+                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium text-primary">
                                     {task}
                                   </span>
                                 ))}
                               </div>
-                              <div className="flex items-center gap-3 text-xs" style={{ color: "#9090A0" }}>
+                              <div className="flex items-center gap-3 text-xs text-muted-foreground">
                                 <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{video.environment}</span>
                                 <span className="flex items-center gap-1"><VideoIcon className="w-3 h-3" />{video.resolution} · {video.frame_rate}</span>
                               </div>
