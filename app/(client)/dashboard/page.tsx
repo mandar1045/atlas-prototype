@@ -37,13 +37,6 @@ const dataGrowth = [
 const BAR_COLORS = ["#2E86AB", "#2A7695", "#25667E", "#205668", "#1B4651", "#17363B"];
 
 /* ─── Style helpers ─────────────────────────────────────────────────────── */
-const glass = {
-  background: "rgba(26,26,46,0.55)",
-  backdropFilter: "blur(18px)",
-  WebkitBackdropFilter: "blur(18px)",
-  border: "1px solid rgba(46,134,171,0.18)",
-  boxShadow: "0 4px 32px rgba(0,0,0,0.40)",
-};
 
 const tooltipStyle = {
   background: "rgba(10,10,16,0.95)",
@@ -63,8 +56,7 @@ function StatCard({
 }) {
   return (
     <div
-      className="rounded-2xl p-5 flex flex-col gap-3 relative overflow-hidden"
-      style={glass}
+      className="rounded-2xl p-5 flex flex-col gap-3 relative overflow-hidden bg-card border border-border shadow-sm rounded-xl"
     >
       <div className="flex items-center justify-between relative z-10">
         <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#9090A0" }}>
@@ -109,10 +101,10 @@ export default function DashboardPage() {
   const item = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
   return (
-    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
+    <div className="flex-1 flex flex-col" >
       <Navbar title="Dashboard Overview" />
 
-      <main className="flex-1 p-6 overflow-y-auto relative" style={{ background: "#0F0F14" }}>
+      <main className="flex-1 p-6 overflow-y-auto relative" >
 
 
 
@@ -134,7 +126,7 @@ export default function DashboardPage() {
 
           {/* ── Charts Row ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <motion.div variants={item} className="rounded-2xl p-5" style={glass}>
+            <motion.div variants={item} className="rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <div className="mb-4">
                 <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Total Data Growth</h2>
                 <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Cumulative dataset hours ingested</p>
@@ -163,7 +155,7 @@ export default function DashboardPage() {
               </div>
             </motion.div>
 
-            <motion.div variants={item} className="rounded-2xl p-5" style={glass}>
+            <motion.div variants={item} className="rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <div className="mb-4">
                 <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Task Distribution</h2>
                 <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Video count by task category</p>
@@ -196,7 +188,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
 
             {/* Quick actions */}
-            <motion.div variants={item} className="lg:col-span-1 rounded-2xl p-5" style={glass}>
+            <motion.div variants={item} className="lg:col-span-1 rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <h2 className="text-sm font-bold mb-4" style={{ color: "#F0F0F0" }}>Quick Actions</h2>
               <div className="space-y-3">
                 <Link href="/collections" className="block">
@@ -252,7 +244,7 @@ export default function DashboardPage() {
             </motion.div>
 
             {/* Recent ingestion queue */}
-            <motion.div variants={item} className="lg:col-span-3 rounded-2xl overflow-hidden" style={glass}>
+            <motion.div variants={item} className="lg:col-span-3 rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
               <div className="px-5 pt-5 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                 <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Recent Ingestion Queue</h2>
                 <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Latest videos added to your collections</p>

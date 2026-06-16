@@ -131,17 +131,15 @@ export default function LoginPage() {
           <div
             className="rounded-2xl p-8"
             style={{
-              background: "rgba(26,26,46,0.80)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(46,134,171,0.30)",
-              boxShadow: "0 0 40px rgba(46,134,171,0.08), 0 8px 32px rgba(0,0,0,0.4)",
+              background: "#121212",
+              border: "1px solid #27272A",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
             }}
           >
             {/* ── Pill toggle ── */}
             <div
               className="flex rounded-xl p-1 mb-8"
-              style={{ background: "rgba(42,42,62,0.7)", border: "1px solid #2A2A3E" }}
+              style={{ background: "#0A0A0A", border: "1px solid #27272A" }}
             >
               {(["client", "admin"] as const).map((tab) => {
                 const isActive = activeTab === tab;
@@ -155,9 +153,9 @@ export default function LoginPage() {
                     style={{
                       color: isActive ? "#F0F0F0" : "#9090A0",
                       background: isActive
-                        ? "linear-gradient(135deg, #2E86AB, #1a6a8a)"
+                        ? "#0070F3"
                         : "transparent",
-                      boxShadow: isActive ? "0 4px 14px rgba(46,134,171,0.35)" : "none",
+                      boxShadow: isActive ? "0 4px 14px rgba(0,112,243,0.35)" : "none",
                     }}
                   >
                     <Icon className="w-4 h-4" />
@@ -230,12 +228,12 @@ export default function LoginPage() {
                   required
                   className="w-full h-11 rounded-lg px-4 text-sm outline-none transition-all duration-200"
                   style={{
-                    background: "rgba(42,42,62,0.8)",
-                    border: "1px solid #2A2A3E",
-                    color: "#F0F0F0",
+                    background: "#0A0A0A",
+                    border: "1px solid #27272A",
+                    color: "#FAFAFA",
                   }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = "#2E86AB")}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = "#2A2A3E")}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = "#0070F3")}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = "#27272A")}
                 />
               </div>
 
@@ -258,9 +256,9 @@ export default function LoginPage() {
                 disabled={isLoading}
                 className="w-full h-11 rounded-lg text-base font-semibold transition-all duration-200 mt-4 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{
-                  background: "linear-gradient(135deg, #2E86AB, #1a6a8a)",
-                  color: "#F0F0F0",
-                  boxShadow: "0 4px 20px rgba(46,134,171,0.35)",
+                  background: "#0070F3",
+                  color: "#FFFFFF",
+                  boxShadow: "0 4px 20px rgba(0,112,243,0.35)",
                 }}
               >
                 {isLoading ? (

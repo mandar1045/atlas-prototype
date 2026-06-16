@@ -60,21 +60,7 @@ const taskDist = [
 ];
 
 /* ─── Glassmorphism helpers ───────────────────────────────────────────────── */
-const glass = {
-  background: "rgba(26,26,46,0.60)",
-  backdropFilter: "blur(16px)",
-  WebkitBackdropFilter: "blur(16px)",
-  border: "1px solid rgba(46,134,171,0.18)",
-  boxShadow: "0 4px 32px rgba(0,0,0,0.35)",
-};
 
-const glassAccent = {
-  background: "rgba(46,134,171,0.08)",
-  backdropFilter: "blur(12px)",
-  WebkitBackdropFilter: "blur(12px)",
-  border: "1px solid rgba(46,134,171,0.25)",
-  boxShadow: "0 4px 20px rgba(46,134,171,0.10)",
-};
 
 const tooltipStyle = {
   background: "rgba(15,15,20,0.95)",
@@ -93,8 +79,7 @@ function StatCard({
 }) {
   return (
     <div
-      className="rounded-2xl p-5 flex flex-col gap-3 relative overflow-hidden"
-      style={{ ...glass, boxShadow: `0 4px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(46,134,171,0.10)` }}
+      className="rounded-2xl p-5 flex flex-col gap-3 relative overflow-hidden bg-card border border-border shadow-sm rounded-xl"
     >
 
       <div className="flex items-center justify-between">
@@ -170,10 +155,10 @@ export default function AdminPage() {
   const item = { hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } };
 
   return (
-    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
+    <div className="flex-1 flex flex-col" >
       <Navbar title="Admin Dashboard" isAdmin={true} />
 
-      <main className="flex-1 p-6 overflow-y-auto" style={{ background: "#0F0F14" }}>
+      <main className="flex-1 p-6 overflow-y-auto" >
         <motion.div
           className="max-w-7xl mx-auto space-y-8"
           variants={containerVariants}
@@ -211,7 +196,7 @@ export default function AdminPage() {
           {/* ── Charts row ── */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {/* Ingestion trend */}
-            <motion.div variants={item} className="lg:col-span-2 rounded-2xl p-5" style={glass}>
+            <motion.div variants={item} className="lg:col-span-2 rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <SectionHeader title="Video Ingestion Trend" sub="Monthly growth across the pipeline" />
               <div className="h-[220px]">
                 {isClient ? (
@@ -239,7 +224,7 @@ export default function AdminPage() {
             </motion.div>
 
             {/* Task distribution */}
-            <motion.div variants={item} className="rounded-2xl p-5" style={glass}>
+            <motion.div variants={item} className="rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
               <SectionHeader title="Task Distribution" sub="Video count by task type" />
               <div className="h-[220px]">
                 {isClient ? (
@@ -272,7 +257,7 @@ export default function AdminPage() {
               { title: "PII Check Status", data: piiBreakdown },
               { title: "QA Verification Status", data: qaBreakdown },
             ].map(({ title, data }) => (
-              <div key={title} className="rounded-2xl p-5" style={glass}>
+              <div key={title} className="rounded-2xl p-5 bg-card border border-border shadow-sm rounded-xl">
                 <SectionHeader title={title} />
                 <div className="space-y-3">
                   {data.map((d) => (
@@ -301,7 +286,7 @@ export default function AdminPage() {
           </motion.div>
 
           {/* ── Organizations table ── */}
-          <motion.div variants={item} className="rounded-2xl overflow-hidden" style={glass}>
+          <motion.div variants={item} className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
             <div className="flex items-center justify-between px-6 pt-5 pb-4">
               <SectionHeader title="Client Organizations" sub={`${MOCK_ORGS.length} registered orgs`} />
               <button
@@ -381,7 +366,7 @@ export default function AdminPage() {
           </motion.div>
 
           {/* ── Dataset Requests ── */}
-          <motion.div variants={item} className="rounded-2xl overflow-hidden" style={glass}>
+          <motion.div variants={item} className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
             <div className="flex items-center justify-between px-6 pt-5 pb-4">
               <SectionHeader title="Dataset Delivery Requests" sub="Pending approvals and active deliveries" />
               <div className="flex items-center gap-2">
@@ -452,7 +437,7 @@ export default function AdminPage() {
           </motion.div>
 
           {/* ── Recent ingestion queue ── */}
-          <motion.div variants={item} className="rounded-2xl overflow-hidden" style={glass}>
+          <motion.div variants={item} className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
             <div className="flex items-center justify-between px-6 pt-5 pb-4">
               <SectionHeader title="Recent Ingestion Queue" sub="Latest videos through the pipeline" />
               <button
@@ -541,8 +526,7 @@ export default function AdminPage() {
           {/* ── System health footer ── */}
           <motion.div
             variants={item}
-            className="rounded-2xl px-6 py-4 flex flex-wrap items-center gap-6"
-            style={glassAccent}
+            className="rounded-2xl px-6 py-4 flex flex-wrap items-center gap-6 bg-muted/50 border border-border rounded-xl"
           >
             <div className="flex items-center gap-2 text-xs font-medium" style={{ color: "#9090A0" }}>
               <Activity className="w-3.5 h-3.5" style={{ color: "#2E86AB" }} />

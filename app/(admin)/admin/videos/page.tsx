@@ -5,7 +5,7 @@ import { Wrench } from "lucide-react";
 
 export default function VideoQAReviewPage() {
   return (
-    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
+    <div className="flex-1 flex flex-col" >
       <Navbar title="Video QA & Review" isAdmin={true} />
       <main className="flex-1 p-6 flex flex-col items-center justify-center">
         <div 

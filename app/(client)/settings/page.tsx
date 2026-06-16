@@ -4,13 +4,6 @@ import { Navbar } from "@/components/layout/navbar";
 import { useAuth } from "@/components/providers/auth-provider";
 import { User, Bell, Key, Shield, Save, RefreshCw } from "lucide-react";
 
-const glass = {
-  background: "rgba(26,26,46,0.55)",
-  backdropFilter: "blur(18px)",
-  WebkitBackdropFilter: "blur(18px)",
-  border: "1px solid rgba(46,134,171,0.18)",
-  boxShadow: "0 4px 32px rgba(0,0,0,0.40)",
-};
 
 const inputStyle: React.CSSProperties = {
   background: "rgba(42,42,62,0.7)",
@@ -28,7 +21,7 @@ function SectionCard({ icon: Icon, iconColor, title, description, children }: {
   icon: React.ElementType; iconColor: string; title: string; description: string; children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl overflow-hidden" style={glass}>
+    <div className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
       <div className="px-6 py-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -66,9 +59,9 @@ function Toggle({ label, sub, defaultOn = false }: { label: string; sub: string;
 export default function SettingsPage() {
   const { user } = useAuth();
   return (
-    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
+    <div className="flex-1 flex flex-col" >
       <Navbar title="Settings" />
-      <main className="flex-1 p-6 overflow-y-auto" style={{ background: "transparent" }}>
+      <main className="flex-1 p-6 overflow-y-auto" >
         <div className="max-w-3xl mx-auto space-y-5">
 
           <div className="mb-6">

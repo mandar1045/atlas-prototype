@@ -89,7 +89,7 @@ export default function ExplorerPage() {
   const activeFilterCount = selectedTasks.size + (selectedFps !== "All" ? 1 : 0) + (selectedResolution !== "All" ? 1 : 0) + (selectedPii !== "All" ? 1 : 0) + (handsVisibleOnly ? 1 : 0);
 
   return (
-    <div className="flex flex-col h-screen" style={{ background: "#0F0F14" }}>
+    <div className="flex flex-col h-screen" >
       <Navbar title="Dataset Explorer" />
 
       <div className="flex flex-1 overflow-hidden">
@@ -226,7 +226,7 @@ export default function ExplorerPage() {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col relative min-h-0" style={{ background: "transparent" }}>
+        <div className="flex-1 flex flex-col relative min-h-0" >
 
           {/* Top Bar */}
           <div className="p-6 pb-0 space-y-4">

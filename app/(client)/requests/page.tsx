@@ -3,13 +3,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { PlusCircle, FileText, Clock, CheckCircle2, MapPin, Cpu } from "lucide-react";
 
-const glass = {
-  background: "rgba(26,26,46,0.55)",
-  backdropFilter: "blur(18px)",
-  WebkitBackdropFilter: "blur(18px)",
-  border: "1px solid rgba(46,134,171,0.18)",
-  boxShadow: "0 4px 32px rgba(0,0,0,0.40)",
-};
 
 const MOCK_REQUESTS = [
   {
@@ -26,10 +19,10 @@ const MOCK_REQUESTS = [
 
 export default function RequestsPage() {
   return (
-    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
+    <div className="flex-1 flex flex-col" >
       <Navbar title="Data Requests" />
 
-      <main className="flex-1 p-6 overflow-y-auto" style={{ background: "transparent" }}>
+      <main className="flex-1 p-6 overflow-y-auto" >
         <div className="max-w-4xl mx-auto space-y-6">
 
           {/* Header */}
@@ -59,7 +52,7 @@ export default function RequestsPage() {
 
           {/* Active requests */}
           {MOCK_REQUESTS.map((req) => (
-            <div key={req.id} className="rounded-2xl p-6" style={glass}>
+            <div key={req.id} className="rounded-2xl p-6 bg-card border border-border shadow-sm rounded-xl">
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div className="flex items-start gap-4">
                   <div

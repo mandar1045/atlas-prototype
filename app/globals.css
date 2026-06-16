@@ -40,56 +40,54 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
-/* ─── Single dark palette — used as the ONLY :root so every page is dark ─── */
+/* ─── Ultra-clean Professional Dark Theme ─── */
 :root {
-  --background:            #0F0F14;
-  --foreground:            #F0F0F0;
+  --background:            #0A0A0A;
+  --foreground:            #FAFAFA;
 
-  --card:                  #1A1A2E;
-  --card-foreground:       #F0F0F0;
+  --card:                  #121212;
+  --card-foreground:       #FAFAFA;
 
-  --popover:               #1A1A2E;
-  --popover-foreground:    #F0F0F0;
+  --popover:               #121212;
+  --popover-foreground:    #FAFAFA;
 
-  --surface:               #1A1A2E;
+  --surface:               #121212;
 
-  --primary:               #2E86AB;
-  --primary-foreground:    #F0F0F0;
+  --primary:               #0070F3;
+  --primary-foreground:    #FFFFFF;
 
-  --secondary:             #2A2A3E;
-  --secondary-foreground:  #F0F0F0;
+  --secondary:             #27272A;
+  --secondary-foreground:  #FAFAFA;
 
-  --muted:                 #2A2A3E;
-  --muted-foreground:      #9090A0;
+  --muted:                 #18181B;
+  --muted-foreground:      #A1A1AA;
 
-  --accent:                #2E86AB;
-  --accent-foreground:     #F0F0F0;
+  --accent:                #27272A;
+  --accent-foreground:     #FAFAFA;
 
   --destructive:           #EF4444;
-  --destructive-foreground: #F0F0F0;
+  --destructive-foreground: #FAFAFA;
 
-  --border:                #2A2A3E;
-  --input:                 #2A2A3E;
-  --ring:                  #2E86AB;
+  --border:                #27272A;
+  --input:                 #27272A;
+  --ring:                  #0070F3;
 
-  --radius: 0.5rem;
+  --radius: 0.375rem;
 
   /* Sidebar tokens */
-  --sidebar:                    #1A1A2E;
-  --sidebar-foreground:         #F0F0F0;
-  --sidebar-primary:            #2E86AB;
-  --sidebar-primary-foreground: #F0F0F0;
-  --sidebar-accent:             #2A2A3E;
-  --sidebar-accent-foreground:  #F0F0F0;
-  --sidebar-border:             #2A2A3E;
-  --sidebar-ring:               #2E86AB;
+  --sidebar:                    #0A0A0A;
+  --sidebar-foreground:         #A1A1AA;
+  --sidebar-primary:            #0070F3;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:             #18181B;
+  --sidebar-accent-foreground:  #FAFAFA;
+  --sidebar-border:             #27272A;
+  --sidebar-ring:               #0070F3;
 
   /* Semantic helpers */
-  --success: #22C55E;
+  --success: #10B981;
   --warning: #F59E0B;
 }
-
-/* No separate .dark block needed — root IS dark */
 
 @layer base {
   * {

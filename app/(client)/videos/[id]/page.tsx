@@ -6,13 +6,6 @@ import { MOCK_VIDEOS } from "@/lib/data";
 import { ArrowLeft, CheckCircle2, AlertCircle, FileJson, Play } from "lucide-react";
 import Link from "next/link";
 
-const glass = {
-  background: "rgba(26,26,46,0.55)",
-  backdropFilter: "blur(18px)",
-  WebkitBackdropFilter: "blur(18px)",
-  border: "1px solid rgba(46,134,171,0.18)",
-  boxShadow: "0 4px 32px rgba(0,0,0,0.40)",
-};
 
 const dlStyle = {
   container: {
@@ -38,10 +31,10 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
   if (!isClient) return null;
 
   return (
-    <div className="flex flex-col h-screen" style={{ background: "#0F0F14" }}>
+    <div className="flex flex-col h-screen" >
       <Navbar title={video.video_id} />
 
-      <div className="flex-1 overflow-hidden flex flex-col lg:flex-row" style={{ background: "transparent" }}>
+      <div className="flex-1 overflow-hidden flex flex-col lg:flex-row" >
         
         {/* Left Column - Video Player & Timeline */}
         <div className="flex-1 flex flex-col min-w-0 overflow-y-auto" style={{ borderRight: "1px solid rgba(46,134,171,0.15)" }}>
@@ -78,7 +71,7 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
                   System Generated
                 </span>
               </div>
-              <div className="rounded-2xl overflow-hidden" style={glass}>
+              <div className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm rounded-xl">
                 <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
                   {video.task_type.map((task, i) => {
                     const totalMins = video.duration_minutes;

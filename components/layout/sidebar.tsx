@@ -48,23 +48,15 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
 
   return (
     <div
-      className="w-64 h-screen sticky top-0 flex flex-col"
-      style={{
-        background: "rgba(15,15,20,0.95)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderRight: "1px solid rgba(46,134,171,0.15)",
-      }}
+      className="w-64 h-screen sticky top-0 flex flex-col bg-sidebar border-r border-sidebar-border"
     >
       {/* Logo */}
       <div
-        className="h-16 flex items-center px-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+        className="h-16 flex items-center px-5 h-16 flex items-center px-5 border-b border-border"
       >
         <div className="flex items-center gap-3">
           <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #2E86AB, #1a6a8a)" }}
+            className="w-8 h-8 rounded-lg flex items-center justify-center w-8 h-8 rounded-lg flex items-center justify-center bg-primary text-primary-foreground"
           >
             <div className="w-4 h-4 border-2 border-white rounded-sm rotate-45 transform" />
           </div>
@@ -131,8 +123,7 @@ export function Sidebar({ isAdmin = false }: SidebarProps) {
 
       {/* Logout */}
       <div
-        className="p-4"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+        className="p-4 p-4 border-t border-border"
       >
         <button
           onClick={logout}
