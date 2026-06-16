@@ -89,18 +89,22 @@ export default function ExplorerPage() {
   const activeFilterCount = selectedTasks.size + (selectedFps !== "All" ? 1 : 0) + (selectedResolution !== "All" ? 1 : 0) + (selectedPii !== "All" ? 1 : 0) + (handsVisibleOnly ? 1 : 0);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen" style={{ background: "#0F0F14" }}>
       <Navbar title="Dataset Explorer" />
-      
+
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Filter Panel */}
-        <div className="w-64 border-r border-border bg-surface/50 flex flex-col">
-          <div className="p-4 border-b border-border flex justify-between items-center">
-            <h2 className="font-semibold text-sm">Filters</h2>
+        <div className="w-64 flex flex-col" style={{
+          background: "rgba(15,15,20,0.85)",
+          backdropFilter: "blur(16px)",
+          borderRight: "1px solid rgba(46,134,171,0.14)",
+        }}>
+          <div className="p-4 flex justify-between items-center" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <h2 className="font-semibold text-sm" style={{ color: "#F0F0F0" }}>Filters</h2>
             {activeFilterCount > 0 && (
-              <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/20">
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "rgba(46,134,171,0.15)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.28)" }}>
                 {activeFilterCount} active
-              </Badge>
+              </span>
             )}
           </div>
           
@@ -109,21 +113,24 @@ export default function ExplorerPage() {
               
               {/* Task Type Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">Task Type</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>Task Type</h3>
                 <div className="space-y-2">
                   {allTasks.map(task => (
-                    <label 
-                      key={task} 
+                    <label
+                      key={task}
                       className="flex items-center gap-2 cursor-pointer group"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleTask(task);
-                      }}
+                      onClick={(e) => { e.preventDefault(); toggleTask(task); }}
                     >
-                      <div className={`w-4 h-4 rounded-sm border ${selectedTasks.has(task) ? 'bg-primary border-primary' : 'border-border group-hover:border-primary/50'} flex items-center justify-center transition-colors`}>
-                        {selectedTasks.has(task) && <CheckCircle2 className="w-3 h-3 text-primary-foreground" />}
+                      <div
+                        className="w-4 h-4 rounded flex items-center justify-center transition-all"
+                        style={{
+                          background: selectedTasks.has(task) ? "#2E86AB" : "rgba(42,42,62,0.8)",
+                          border: selectedTasks.has(task) ? "1px solid #2E86AB" : "1px solid rgba(46,134,171,0.22)",
+                        }}
+                      >
+                        {selectedTasks.has(task) && <CheckCircle2 className="w-3 h-3" style={{ color: "#F0F0F0" }} />}
                       </div>
-                      <span className="text-sm text-foreground">{task}</span>
+                      <span className="text-sm" style={{ color: "#F0F0F0" }}>{task}</span>
                     </label>
                   ))}
                 </div>
@@ -131,111 +138,133 @@ export default function ExplorerPage() {
 
               {/* Frame Rate Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">Frame Rate</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>Frame Rate</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "30fps", "60fps"].map(fps => (
-                    <Badge 
-                      key={fps} 
-                      variant={selectedFps === fps ? "default" : "outline"}
-                      className={`cursor-pointer ${selectedFps === fps ? 'bg-primary' : 'border-border/50 text-muted-foreground hover:border-primary/50'}`}
+                    <button
+                      key={fps}
+                      className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
+                      style={{
+                        background: selectedFps === fps ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
+                        color: selectedFps === fps ? "#2E86AB" : "#9090A0",
+                        border: selectedFps === fps ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)",
+                      }}
                       onClick={() => setSelectedFps(fps)}
                     >
                       {fps}
-                    </Badge>
+                    </button>
                   ))}
                 </div>
               </div>
 
               {/* Resolution Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">Resolution</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>Resolution</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "1080p", "720p"].map(res => (
-                    <Badge 
-                      key={res} 
-                      variant={selectedResolution === res ? "default" : "outline"}
-                      className={`cursor-pointer ${selectedResolution === res ? 'bg-primary' : 'border-border/50 text-muted-foreground hover:border-primary/50'}`}
+                    <button
+                      key={res}
+                      className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
+                      style={{
+                        background: selectedResolution === res ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
+                        color: selectedResolution === res ? "#2E86AB" : "#9090A0",
+                        border: selectedResolution === res ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)",
+                      }}
                       onClick={() => setSelectedResolution(res)}
                     >
                       {res}
-                    </Badge>
+                    </button>
                   ))}
                 </div>
               </div>
 
               {/* PII Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider">PII Status</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#9090A0" }}>PII Status</h3>
                 <div className="flex flex-wrap gap-2">
                   {["All", "No PII", "Blurred Required"].map(pii => (
-                    <Badge 
-                      key={pii} 
-                      variant={selectedPii === pii ? "default" : "outline"}
-                      className={`cursor-pointer ${selectedPii === pii ? 'bg-primary' : 'border-border/50 text-muted-foreground hover:border-primary/50'}`}
+                    <button
+                      key={pii}
+                      className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
+                      style={{
+                        background: selectedPii === pii ? "rgba(46,134,171,0.20)" : "rgba(42,42,62,0.6)",
+                        color: selectedPii === pii ? "#2E86AB" : "#9090A0",
+                        border: selectedPii === pii ? "1px solid rgba(46,134,171,0.40)" : "1px solid rgba(255,255,255,0.07)",
+                      }}
                       onClick={() => setSelectedPii(pii)}
                     >
                       {pii}
-                    </Badge>
+                    </button>
                   ))}
                 </div>
               </div>
 
               {/* Hands Visible */}
-              <div className="space-y-3 pt-2 border-t border-border/50">
+              <div className="space-y-3 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-foreground">Hands Visible Only</h3>
+                  <h3 className="text-sm font-medium" style={{ color: "#F0F0F0" }}>Hands Visible Only</h3>
                   <Switch checked={handsVisibleOnly} onCheckedChange={setHandsVisibleOnly} />
                 </div>
               </div>
 
             </div>
           </ScrollArea>
-          
+
           {activeFilterCount > 0 && (
-            <div className="p-4 border-t border-border">
-              <Button variant="outline" className="w-full border-border/50 text-muted-foreground hover:text-foreground" onClick={clearFilters}>
-                <FilterX className="w-4 h-4 mr-2" />
-                Clear Filters
-              </Button>
+            <div className="p-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <button
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-semibold transition-all"
+                style={{ background: "rgba(239,68,68,0.10)", color: "#EF4444", border: "1px solid rgba(239,68,68,0.20)" }}
+                onClick={clearFilters}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.18)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(239,68,68,0.10)"; }}
+              >
+                <FilterX className="w-4 h-4" /> Clear Filters
+              </button>
             </div>
           )}
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col bg-background/50 relative min-h-0">
-          
+        <div className="flex-1 flex flex-col relative min-h-0" style={{ background: "transparent" }}>
+
           {/* Top Bar */}
           <div className="p-6 pb-0 space-y-4">
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <Input 
-                placeholder="Search by task, environment, video ID..." 
-                className="pl-11 h-12 bg-surface/80 border-border/50 text-base"
+              <Search className="absolute left-3.5 top-3.5 h-4 w-4" style={{ color: "#9090A0" }} />
+              <input
+                placeholder="Search by task, environment, video ID…"
+                className="w-full h-12 pl-10 pr-4 rounded-xl text-sm outline-none transition-all"
+                style={{
+                  background: "rgba(26,26,46,0.60)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(46,134,171,0.18)",
+                  color: "#F0F0F0",
+                }}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#2E86AB")}
+                onBlur={(e)  => (e.currentTarget.style.borderColor = "rgba(46,134,171,0.18)")}
               />
             </div>
-            
-            <div className="flex justify-between items-center text-sm text-muted-foreground">
-              <p>Showing 1–{filteredVideos.length} of {MOCK_VIDEOS.length} videos</p>
-              
-              <div className="flex items-center gap-2 bg-surface p-1 rounded-md border border-border/50">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className={`h-8 w-8 rounded-sm ${viewMode === 'grid' ? 'bg-primary/20 text-primary' : 'text-muted-foreground'}`}
-                  onClick={() => setViewMode('grid')}
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className={`h-8 w-8 rounded-sm ${viewMode === 'list' ? 'bg-primary/20 text-primary' : 'text-muted-foreground'}`}
-                  onClick={() => setViewMode('list')}
-                >
-                  <List className="h-4 w-4" />
-                </Button>
+
+            <div className="flex justify-between items-center text-sm">
+              <p style={{ color: "#9090A0" }}>Showing 1–{filteredVideos.length} of {MOCK_VIDEOS.length} videos</p>
+
+              <div className="flex items-center gap-1 p-1 rounded-xl" style={{ background: "rgba(26,26,46,0.70)", border: "1px solid rgba(46,134,171,0.15)" }}>
+                {(["grid", "list"] as const).map((m) => (
+                  <button
+                    key={m}
+                    className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
+                    style={{
+                      background: viewMode === m ? "rgba(46,134,171,0.20)" : "transparent",
+                      color: viewMode === m ? "#2E86AB" : "#9090A0",
+                    }}
+                    onClick={() => setViewMode(m)}
+                  >
+                    {m === "grid" ? <Grid className="h-4 w-4" /> : <List className="h-4 w-4" />}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -249,14 +278,19 @@ export default function ExplorerPage() {
                   animate={{ opacity: 1 }} 
                   className="flex flex-col items-center justify-center h-64 text-center space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-full bg-surface border border-border flex items-center justify-center">
-                    <Search className="h-8 w-8 text-muted-foreground" />
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                    style={{ background: "rgba(46,134,171,0.12)", border: "1px solid rgba(46,134,171,0.25)" }}>
+                    <Search className="h-8 w-8" style={{ color: "#2E86AB" }} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold">No videos found</h3>
-                    <p className="text-muted-foreground mt-1">Try adjusting your filters or search query.</p>
+                    <h3 className="text-lg font-semibold" style={{ color: "#F0F0F0" }}>No videos found</h3>
+                    <p className="text-sm mt-1" style={{ color: "#9090A0" }}>Try adjusting your filters or search query.</p>
                   </div>
-                  <Button variant="outline" onClick={clearFilters}>Clear all filters</Button>
+                  <button
+                    className="px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+                    style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.28)" }}
+                    onClick={clearFilters}
+                  >Clear all filters</button>
                 </motion.div>
               ) : (
                 <motion.div 
@@ -276,66 +310,123 @@ export default function ExplorerPage() {
                       transition={{ duration: 0.2 }}
                       key={video.id}
                     >
-                      <Link href={`/videos/${video.id}`} className={`block group ${viewMode === 'list' ? 'flex gap-6 items-center bg-surface p-4 rounded-xl border border-border hover:border-primary/50 transition-colors' : ''}`}>
-                        
+                      <Link
+                        href={`/videos/${video.id}`}
+                        className="block group"
+                        style={viewMode === "list" ? {
+                          display: "flex", gap: "1.5rem", alignItems: "center",
+                          background: "rgba(26,26,46,0.55)",
+                          backdropFilter: "blur(16px)",
+                          border: "1px solid rgba(46,134,171,0.15)",
+                          borderRadius: "16px",
+                          padding: "16px",
+                          transition: "border-color 0.2s",
+                        } : {}}
+                        onMouseEnter={(e) => { if (viewMode === "list") (e.currentTarget as HTMLElement).style.borderColor = "rgba(46,134,171,0.40)"; }}
+                        onMouseLeave={(e) => { if (viewMode === "list") (e.currentTarget as HTMLElement).style.borderColor = "rgba(46,134,171,0.15)"; }}
+                      >
                         {/* Thumbnail */}
-                        <div className={`relative bg-surface rounded-xl overflow-hidden border border-border ${viewMode === 'grid' ? 'aspect-video mb-3 group-hover:border-primary/50 transition-colors' : 'w-64 aspect-video shrink-0'}`}>
-                          <img src={video.thumbnail_url} alt={video.video_id} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                        <div
+                          className={`relative overflow-hidden ${viewMode === "grid" ? "aspect-video mb-3" : "aspect-video shrink-0"}`}
+                          style={{
+                            borderRadius: "12px",
+                            border: "1px solid rgba(46,134,171,0.15)",
+                            width: viewMode === "list" ? "240px" : undefined,
+                          }}
+                        >
+                          <img src={video.thumbnail_url} alt={video.video_id}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
-                          
-                          {/* Duration Badge */}
-                          <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm text-white text-xs font-mono px-2 py-1 rounded-md">
+
+                          {/* Duration */}
+                          <div className="absolute bottom-2 left-2 text-white text-xs font-mono px-2 py-0.5 rounded-md"
+                            style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}>
                             {video.video_length}
                           </div>
-                          
-                          {/* QA Badge */}
+
+                          {/* QA badge */}
                           <div className="absolute top-2 right-2">
                             {video.qa_status === "Verified" ? (
-                              <div className="bg-success text-black text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                              <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"
+                                style={{ background: "rgba(34,197,94,0.85)", color: "#000" }}>
                                 <CheckCircle2 className="w-3 h-3" /> VERIFIED
                               </div>
                             ) : (
-                              <div className="bg-warning text-black text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
+                              <div className="text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1"
+                                style={{ background: "rgba(245,158,11,0.85)", color: "#000" }}>
                                 <AlertCircle className="w-3 h-3" /> PENDING
                               </div>
                             )}
                           </div>
 
-                          {/* Hover Play Button */}
+                          {/* Play hover */}
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="w-12 h-12 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg shadow-primary/30 transform scale-90 group-hover:scale-100 transition-transform">
-                              <Play className="w-5 h-5 ml-1" />
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center"
+                              style={{ background: "rgba(46,134,171,0.90)", boxShadow: "0 4px 20px rgba(46,134,171,0.50)" }}>
+                              <Play className="w-5 h-5 ml-0.5" style={{ color: "#F0F0F0" }} />
                             </div>
                           </div>
                         </div>
 
                         {/* Metadata */}
-                        <div className={`flex-1 ${viewMode === 'grid' ? 'space-y-2' : 'flex flex-col gap-2'}`}>
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground font-mono">{video.video_id}</span>
-                            <div className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${video.pii_check_status === 'No PII' ? 'bg-secondary/10 text-secondary border-secondary/20' : 'bg-orange-500/10 text-orange-400 border-orange-500/20'}`}>
-                              {video.pii_check_status}
+                        <div className={`flex-1 ${viewMode === "grid" ? "space-y-2" : "flex flex-col gap-2"}`}>
+                          {viewMode === "grid" && (
+                            <div
+                              className="rounded-xl p-3 space-y-2"
+                              style={{ background: "rgba(26,26,46,0.55)", backdropFilter: "blur(12px)", border: "1px solid rgba(46,134,171,0.14)" }}
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-mono text-xs font-semibold" style={{ color: "#2E86AB" }}>{video.video_id}</span>
+                                <span
+                                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                                  style={video.pii_check_status === "No PII"
+                                    ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.22)" }
+                                    : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.22)" }
+                                  }>
+                                  {video.pii_check_status}
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {video.task_type.map((task, i) => (
+                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                                    style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}>
+                                    {task}
+                                  </span>
+                                ))}
+                              </div>
+                              <div className="flex items-center gap-3 text-xs" style={{ color: "#9090A0" }}>
+                                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{video.environment}</span>
+                                <span className="flex items-center gap-1"><VideoIcon className="w-3 h-3" />{video.resolution} · {video.frame_rate}</span>
+                              </div>
                             </div>
-                          </div>
-                          
-                          <div className="flex flex-wrap gap-1">
-                            {video.task_type.map((task, i) => (
-                              <Badge key={i} variant="secondary" className="bg-surface border-border text-[10px]">
-                                {task}
-                              </Badge>
-                            ))}
-                          </div>
-                          
-                          <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
-                            <div className="flex items-center gap-1">
-                              <MapPin className="w-3 h-3" />
-                              {video.environment}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <VideoIcon className="w-3 h-3" />
-                              {video.resolution} • {video.frame_rate}
-                            </div>
-                          </div>
+                          )}
+                          {viewMode === "list" && (
+                            <>
+                              <div className="flex items-center justify-between">
+                                <span className="font-mono text-xs font-semibold" style={{ color: "#2E86AB" }}>{video.video_id}</span>
+                                <span
+                                  className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                                  style={video.pii_check_status === "No PII"
+                                    ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.22)" }
+                                    : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.22)" }
+                                  }>
+                                  {video.pii_check_status}
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {video.task_type.map((task, i) => (
+                                  <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                                    style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}>
+                                    {task}
+                                  </span>
+                                ))}
+                              </div>
+                              <div className="flex items-center gap-3 text-xs" style={{ color: "#9090A0" }}>
+                                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{video.environment}</span>
+                                <span className="flex items-center gap-1"><VideoIcon className="w-3 h-3" />{video.resolution} · {video.frame_rate}</span>
+                              </div>
+                            </>
+                          )}
                         </div>
 
                       </Link>

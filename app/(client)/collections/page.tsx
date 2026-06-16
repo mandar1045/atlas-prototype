@@ -21,10 +21,10 @@ export default function CollectionsPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
       <Navbar title="Your Collections" />
-      
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto bg-background/50">
+
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto" style={{ background: "transparent" }}>
         <motion.div 
           className="max-w-7xl mx-auto"
           variants={containerVariants}

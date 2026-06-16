@@ -3,13 +3,27 @@
 import { use, useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { MOCK_VIDEOS } from "@/lib/data";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Download, ArrowLeft, CheckCircle2, AlertCircle, FileJson } from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertCircle, FileJson, Play } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+
+const glass = {
+  background: "rgba(26,26,46,0.55)",
+  backdropFilter: "blur(18px)",
+  WebkitBackdropFilter: "blur(18px)",
+  border: "1px solid rgba(46,134,171,0.18)",
+  boxShadow: "0 4px 32px rgba(0,0,0,0.40)",
+};
+
+const dlStyle = {
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "8px 0",
+    borderBottom: "1px solid rgba(255,255,255,0.04)"
+  },
+  dt: { color: "#9090A0", fontSize: "12px" },
+  dd: { color: "#F0F0F0", fontSize: "12px", fontWeight: 500 }
+};
 
 export default function VideoDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
@@ -24,22 +38,27 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
   if (!isClient) return null;
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen" style={{ background: "#0F0F14" }}>
       <Navbar title={video.video_id} />
-      
-      <div className="flex-1 overflow-hidden flex flex-col lg:flex-row">
+
+      <div className="flex-1 overflow-hidden flex flex-col lg:flex-row" style={{ background: "transparent" }}>
+        
         {/* Left Column - Video Player & Timeline */}
-        <div className="flex-1 flex flex-col min-w-0 bg-surface/30 border-r border-border overflow-y-auto">
+        <div className="flex-1 flex flex-col min-w-0 overflow-y-auto" style={{ borderRight: "1px solid rgba(46,134,171,0.15)" }}>
           <div className="p-6 pb-0">
-            <Link href="/explorer" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
-              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Explorer
+            <Link href="/explorer" className="inline-flex items-center text-xs font-semibold transition-colors mb-4" style={{ color: "#9090A0" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#F0F0F0"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "#9090A0"; }}>
+              <ArrowLeft className="w-4 h-4 mr-1.5" /> Back to Explorer
             </Link>
           </div>
 
-          <div className="px-6 flex-1 max-w-5xl mx-auto w-full">
-            {/* Video Player Container */}
-            <div className="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-2xl shadow-primary/5 border border-border">
-              <video 
+          <div className="px-6 flex-1 max-w-5xl mx-auto w-full pb-10">
+            
+            {/* Video Player */}
+            <div className="aspect-video w-full bg-black rounded-2xl overflow-hidden"
+              style={{ border: "1px solid rgba(46,134,171,0.25)", boxShadow: "0 10px 40px rgba(0,0,0,0.5)" }}>
+              <video
                 className="w-full h-full object-contain"
                 controls
                 poster={video.thumbnail_url}
@@ -52,166 +71,164 @@ export default function VideoDetailPage({ params }: { params: Promise<{ id: stri
 
             {/* Timeline */}
             <div className="mt-8">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                Activity Timeline
-                <Badge variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/20">System Generated</Badge>
-              </h3>
-              <Card className="bg-surface border-border shadow-md">
-                <CardContent className="p-0">
-                  <div className="divide-y divide-border/50">
-                    {video.task_type.map((task, i) => {
-                      const totalMins = video.duration_minutes;
-                      const taskMins = Math.floor(totalMins / video.task_type.length);
-                      const startMin = i * taskMins;
-                      const endMin = i === video.task_type.length - 1 ? totalMins : (i + 1) * taskMins;
-                      
-                      return (
-                        <div key={i} className="flex items-center p-4 hover:bg-muted/50 transition-colors">
-                          <div className="w-24 font-mono text-sm text-muted-foreground">
-                            {String(startMin).padStart(2, '0')}:00 – {String(endMin).padStart(2, '0')}:00
-                          </div>
-                          <div className="flex-1 flex items-center gap-3 pl-4 border-l border-border/50">
-                            <div className="w-2 h-2 rounded-full bg-secondary" />
-                            <span className="font-medium">{task}</span>
-                          </div>
+              <div className="flex items-center gap-3 mb-4">
+                <h3 className="text-lg font-bold" style={{ color: "#F0F0F0" }}>Activity Timeline</h3>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                  style={{ background: "rgba(46,134,171,0.15)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.30)" }}>
+                  System Generated
+                </span>
+              </div>
+              <div className="rounded-2xl overflow-hidden" style={glass}>
+                <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                  {video.task_type.map((task, i) => {
+                    const totalMins = video.duration_minutes;
+                    const taskMins = Math.floor(totalMins / video.task_type.length);
+                    const startMin = i * taskMins;
+                    const endMin = i === video.task_type.length - 1 ? totalMins : (i + 1) * taskMins;
+
+                    return (
+                      <div key={i} className="flex items-center p-4 transition-colors hover:bg-white/5">
+                        <div className="w-24 font-mono text-xs" style={{ color: "#9090A0" }}>
+                          {String(startMin).padStart(2, '0')}:00 – {String(endMin).padStart(2, '0')}:00
                         </div>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
+                        <div className="flex-1 flex items-center gap-3 pl-4" style={{ borderLeft: "1px solid rgba(255,255,255,0.06)" }}>
+                          <div className="w-2 h-2 rounded-full" style={{ background: "#2E86AB", boxShadow: "0 0 8px #2E86AB" }} />
+                          <span className="text-sm font-semibold" style={{ color: "#F0F0F0" }}>{task}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* Related Videos */}
-            <div className="mt-8 mb-12">
-              <h3 className="text-lg font-semibold mb-4">More from this Collection</h3>
+            <div className="mt-10">
+              <h3 className="text-sm font-bold mb-4" style={{ color: "#F0F0F0" }}>More from this Collection</h3>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {relatedVideos.map(rv => (
                   <Link href={`/videos/${rv.id}`} key={rv.id} className="group block">
-                    <div className="aspect-video bg-surface rounded-lg overflow-hidden border border-border group-hover:border-primary/50 transition-colors relative mb-2">
-                      <img src={rv.thumbnail_url} className="w-full h-full object-cover" alt="" />
-                      <div className="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] font-mono px-1 rounded">
+                    <div className="aspect-video rounded-xl overflow-hidden relative mb-2"
+                      style={{ border: "1px solid rgba(46,134,171,0.20)", transition: "border-color 0.2s" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(46,134,171,0.50)"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(46,134,171,0.20)"; }}>
+                      <img src={rv.thumbnail_url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="" />
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                      <div className="absolute bottom-1.5 left-1.5 text-[10px] font-mono px-1.5 py-0.5 rounded text-white"
+                        style={{ background: "rgba(0,0,0,0.70)", backdropFilter: "blur(4px)" }}>
                         {rv.video_length}
                       </div>
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center"
+                          style={{ background: "rgba(46,134,171,0.9)", boxShadow: "0 4px 12px rgba(46,134,171,0.4)" }}>
+                          <Play className="w-3.5 h-3.5 ml-0.5 text-white" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-sm font-medium truncate">{rv.video_id}</div>
-                    <div className="text-xs text-muted-foreground truncate">{rv.task_type.join(", ")}</div>
+                    <div className="text-xs font-semibold truncate" style={{ color: "#F0F0F0" }}>{rv.video_id}</div>
+                    <div className="text-[10px] truncate mt-0.5" style={{ color: "#9090A0" }}>{rv.task_type.join(", ")}</div>
                   </Link>
                 ))}
               </div>
             </div>
+
           </div>
         </div>
 
         {/* Right Column - Metadata Panel */}
-        <div className="w-full lg:w-[400px] bg-surface flex flex-col shrink-0">
-          <ScrollArea className="flex-1 p-6">
-            <h2 className="text-xl font-bold mb-6">Video Details</h2>
+        <div className="w-full lg:w-[380px] shrink-0 overflow-y-auto" style={{ background: "rgba(15,15,20,0.85)", backdropFilter: "blur(16px)" }}>
+          <div className="p-6 space-y-8">
+            <h2 className="text-xl font-bold" style={{ color: "#F0F0F0" }}>Video Details</h2>
             
-            <div className="space-y-6">
-              {/* Section A - Core Info */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider border-b border-border/50 pb-2">Core Information</h3>
-                <dl className="space-y-2">
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Video ID</dt>
-                    <dd className="text-sm font-mono">{video.video_id}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Worker ID</dt>
-                    <dd className="text-sm font-mono">{video.worker_id}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Date</dt>
-                    <dd className="text-sm">{video.recording_date}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Environment</dt>
-                    <dd className="text-sm">{video.environment}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Duration</dt>
-                    <dd className="text-sm">{video.duration_minutes} min ({video.video_length})</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">File Size</dt>
-                    <dd className="text-sm">{video.file_size}</dd>
-                  </div>
-                </dl>
-              </div>
-
-              {/* Section B - Technical Specs */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider border-b border-border/50 pb-2">Technical Specs</h3>
-                <dl className="space-y-2">
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Resolution</dt>
-                    <dd className="text-sm">{video.resolution}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Frame Rate</dt>
-                    <dd className="text-sm">{video.frame_rate}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Audio</dt>
-                    <dd className="text-sm">{video.audio_quality}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Lighting</dt>
-                    <dd className="text-sm">{video.lighting_quality}</dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-sm text-muted-foreground">Hands Visible</dt>
-                    <dd className="text-sm">{video.hands_visible ? "Yes" : "No"}</dd>
-                  </div>
-                </dl>
-              </div>
-
-              {/* Section C - Compliance */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase text-muted-foreground tracking-wider border-b border-border/50 pb-2">Compliance & QA Pipeline</h3>
-                <dl className="space-y-3 pt-1">
-                  <div className="flex flex-col gap-2 bg-surface p-3 rounded-lg border border-border/50 shadow-sm">
-                    <div className="flex justify-between items-center">
-                      <dt className="text-sm font-medium text-foreground">PII Sanitization</dt>
-                      <dd>
-                        {video.pii_check_status === "No PII" ? (
-                          <div className="flex items-center text-success text-sm font-semibold"><CheckCircle2 className="w-4 h-4 mr-1" /> Verified Clean</div>
-                        ) : (
-                          <div className="flex items-center text-warning text-sm font-semibold"><AlertCircle className="w-4 h-4 mr-1" /> {video.pii_check_status}</div>
-                        )}
-                      </dd>
-                    </div>
-                    <p className="text-xs text-muted-foreground">Automated face and license plate detection completed. No manual blurring required.</p>
-                  </div>
-                  
-                  <div className="flex flex-col gap-2 bg-surface p-3 rounded-lg border border-border/50 shadow-sm">
-                    <div className="flex justify-between items-center">
-                      <dt className="text-sm font-medium text-foreground">Manual QA Review</dt>
-                      <dd>
-                        {video.qa_status === "Verified" ? (
-                          <div className="flex items-center text-success text-sm font-semibold"><CheckCircle2 className="w-4 h-4 mr-1" /> Approved</div>
-                        ) : (
-                          <div className="flex items-center text-warning text-sm font-semibold"><AlertCircle className="w-4 h-4 mr-1" /> Pending Review</div>
-                        )}
-                      </dd>
-                    </div>
-                    <p className="text-xs text-muted-foreground">Reviewed by Senior Data Analyst (ID: QA_771) on {video.recording_date}.</p>
-                  </div>
-                </dl>
+            {/* Section A - Core Info */}
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-wider pb-2 mb-2"
+                style={{ color: "#9090A0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>Core Information</h3>
+              <div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Video ID</span><span style={{...dlStyle.dd, fontFamily: "monospace", color: "#2E86AB"}}>{video.video_id}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Worker ID</span><span style={{...dlStyle.dd, fontFamily: "monospace"}}>{video.worker_id}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Date</span><span style={dlStyle.dd}>{video.recording_date}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Environment</span><span style={dlStyle.dd}>{video.environment}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Duration</span><span style={dlStyle.dd}>{video.duration_minutes} min ({video.video_length})</span></div>
+                <div style={{...dlStyle.container, borderBottom: "none"}}><span style={dlStyle.dt}>File Size</span><span style={dlStyle.dd}>{video.file_size}</span></div>
               </div>
             </div>
-            
-            <div className="mt-8 space-y-3 pb-8">
-              <Button className="w-full bg-primary hover:bg-primary/90 text-white">
-                <FileJson className="w-4 h-4 mr-2" /> Download Metadata
-              </Button>
-              <Button variant="outline" className="w-full border-border/50 hover:bg-background">
+
+            {/* Section B - Technical Specs */}
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-wider pb-2 mb-2"
+                style={{ color: "#9090A0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>Technical Specs</h3>
+              <div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Resolution</span><span style={dlStyle.dd}>{video.resolution}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Frame Rate</span><span style={dlStyle.dd}>{video.frame_rate}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Audio</span><span style={dlStyle.dd}>{video.audio_quality}</span></div>
+                <div style={dlStyle.container}><span style={dlStyle.dt}>Lighting</span><span style={dlStyle.dd}>{video.lighting_quality}</span></div>
+                <div style={{...dlStyle.container, borderBottom: "none"}}><span style={dlStyle.dt}>Hands Visible</span><span style={dlStyle.dd}>{video.hands_visible ? "Yes" : "No"}</span></div>
+              </div>
+            </div>
+
+            {/* Section C - Compliance */}
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-wider pb-3 mb-3"
+                style={{ color: "#9090A0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>Compliance & QA Pipeline</h3>
+              <div className="space-y-3">
+                <div className="rounded-xl p-3" style={{ background: "rgba(26,26,46,0.50)", border: "1px solid rgba(46,134,171,0.15)" }}>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-xs font-semibold" style={{ color: "#F0F0F0" }}>PII Sanitization</span>
+                    {video.pii_check_status === "No PII" ? (
+                      <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "#22C55E" }}>
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Verified Clean
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "#F59E0B" }}>
+                        <AlertCircle className="w-3.5 h-3.5" /> {video.pii_check_status}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] leading-relaxed" style={{ color: "#9090A0" }}>
+                    Automated face and license plate detection completed. No manual blurring required.
+                  </p>
+                </div>
+                
+                <div className="rounded-xl p-3" style={{ background: "rgba(26,26,46,0.50)", border: "1px solid rgba(46,134,171,0.15)" }}>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-xs font-semibold" style={{ color: "#F0F0F0" }}>Manual QA Review</span>
+                    {video.qa_status === "Verified" ? (
+                      <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "#22C55E" }}>
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Approved
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "#F59E0B" }}>
+                        <AlertCircle className="w-3.5 h-3.5" /> Pending Review
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] leading-relaxed" style={{ color: "#9090A0" }}>
+                    Reviewed by Senior Data Analyst (ID: QA_771) on {video.recording_date}.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="pt-4 space-y-3">
+              <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                style={{ background: "linear-gradient(135deg, #2E86AB, #1a6a8a)", color: "#F0F0F0", boxShadow: "0 4px 16px rgba(46,134,171,0.30)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 24px rgba(46,134,171,0.45)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 16px rgba(46,134,171,0.30)"; }}>
+                <FileJson className="w-4 h-4" /> Download Metadata
+              </button>
+              <button className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all"
+                style={{ background: "rgba(26,26,46,0.60)", color: "#F0F0F0", border: "1px solid rgba(255,255,255,0.10)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.15)"; e.currentTarget.style.borderColor = "rgba(46,134,171,0.3)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(26,26,46,0.60)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; }}>
                 Request Similar Data
-              </Button>
+              </button>
             </div>
-          </ScrollArea>
+
+          </div>
         </div>
+
       </div>
     </div>
   );

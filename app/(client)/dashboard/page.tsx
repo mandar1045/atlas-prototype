@@ -2,278 +2,333 @@
 
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/layout/navbar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, AreaChart, Area, CartesianGrid } from "recharts";
+import {
+  AreaChart, Area, BarChart, Bar, XAxis, YAxis,
+  Tooltip, ResponsiveContainer, Cell, CartesianGrid,
+} from "recharts";
 import { MOCK_VIDEOS, MOCK_COLLECTIONS } from "@/lib/data";
-import { Video, Clock, Folder, CheckCircle, Search, Grid, TrendingUp, TrendingDown } from "lucide-react";
+import {
+  Video, Clock, Folder, CheckCircle, Search, Grid,
+  TrendingUp, TrendingDown, Zap,
+} from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
+/* ─── Data ──────────────────────────────────────────────────────────────── */
 const taskDistribution = [
-  { name: "Dishwashing", value: 6 },
-  { name: "Kitchen Clean", value: 4 },
-  { name: "Cooking", value: 3 },
-  { name: "Laundry", value: 3 },
+  { name: "Dishwashing",     value: 6 },
+  { name: "Kitchen Clean",   value: 4 },
+  { name: "Cooking",         value: 3 },
+  { name: "Laundry",         value: 3 },
   { name: "Hanging Clothes", value: 4 },
-  { name: "Cutting Veg", value: 2 },
+  { name: "Cutting Veg",     value: 2 },
 ];
 
 const dataGrowth = [
-  { month: 'Jul', hours: 40 },
-  { month: 'Aug', hours: 55 },
-  { month: 'Sep', hours: 80 },
-  { month: 'Oct', hours: 120 },
-  { month: 'Nov', hours: 210 },
-  { month: 'Dec', hours: 325 },
+  { month: "Jul", hours: 40 },
+  { month: "Aug", hours: 55 },
+  { month: "Sep", hours: 80 },
+  { month: "Oct", hours: 120 },
+  { month: "Nov", hours: 210 },
+  { month: "Dec", hours: 325 },
 ];
 
-const COLORS = ["#1A3C5E", "#2E86AB", "#22C55E", "#F59E0B"];
+const BAR_COLORS = ["#2E86AB", "#2A7695", "#25667E", "#205668", "#1B4651", "#17363B"];
 
+/* ─── Style helpers ─────────────────────────────────────────────────────── */
+const glass = {
+  background: "rgba(26,26,46,0.55)",
+  backdropFilter: "blur(18px)",
+  WebkitBackdropFilter: "blur(18px)",
+  border: "1px solid rgba(46,134,171,0.18)",
+  boxShadow: "0 4px 32px rgba(0,0,0,0.40)",
+};
+
+const tooltipStyle = {
+  background: "rgba(10,10,16,0.95)",
+  border: "1px solid rgba(46,134,171,0.30)",
+  borderRadius: "10px",
+  color: "#F0F0F0",
+  fontSize: "12px",
+  boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
+};
+
+/* ─── Stat card ─────────────────────────────────────────────────────────── */
+function StatCard({
+  label, value, sub, up, Icon, iconColor, glow,
+}: {
+  label: string; value: string | number; sub: string; up: boolean;
+  Icon: React.ElementType; iconColor: string; glow: string;
+}) {
+  return (
+    <div
+      className="rounded-2xl p-5 flex flex-col gap-3 relative overflow-hidden"
+      style={glass}
+    >
+      <div className="flex items-center justify-between relative z-10">
+        <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#9090A0" }}>
+          {label}
+        </span>
+        <div
+          className="w-8 h-8 rounded-xl flex items-center justify-center"
+          style={{ background: `${iconColor}1A`, border: `1px solid ${iconColor}30` }}
+        >
+          <Icon className="w-4 h-4" style={{ color: iconColor }} />
+        </div>
+      </div>
+      <div className="text-3xl font-extrabold relative z-10" style={{ color: "#F0F0F0" }}>
+        {value}
+      </div>
+      <div className="flex items-center gap-1 text-xs relative z-10">
+        {up
+          ? <TrendingUp className="w-3 h-3" style={{ color: "#22C55E" }} />
+          : <TrendingDown className="w-3 h-3" style={{ color: "#F59E0B" }} />
+        }
+        <span className="font-semibold" style={{ color: up ? "#22C55E" : "#F59E0B" }}>{sub}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main ──────────────────────────────────────────────────────────────── */
 export default function DashboardPage() {
-  const totalVideos = MOCK_VIDEOS.length;
-  const totalMinutes = MOCK_VIDEOS.reduce((acc, v) => acc + v.duration_minutes, 0);
-  const totalHours = (totalMinutes / 60).toFixed(1);
-  const complianceRate = Math.round((MOCK_VIDEOS.filter(v => v.pii_check_status === "No PII").length / totalVideos) * 100);
-
+  const totalVideos    = MOCK_VIDEOS.length;
+  const totalMinutes   = MOCK_VIDEOS.reduce((acc, v) => acc + v.duration_minutes, 0);
+  const totalHours     = (totalMinutes / 60).toFixed(1);
+  const complianceRate = Math.round(
+    (MOCK_VIDEOS.filter(v => v.pii_check_status === "No PII").length / totalVideos) * 100
+  );
   const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const containerVariants = {
+  const container = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
   };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
+  const item = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col" style={{ background: "#0F0F14" }}>
       <Navbar title="Dashboard Overview" />
-      
-      <main className="flex-1 p-6 overflow-y-auto bg-surface">
-        <motion.div 
-          className="max-w-7xl mx-auto space-y-6"
-          variants={containerVariants}
+
+      <main className="flex-1 p-6 overflow-y-auto relative" style={{ background: "#0F0F14" }}>
+
+
+
+        <motion.div
+          className="max-w-7xl mx-auto space-y-6 relative"
+          style={{ zIndex: 1 }}
+          variants={container}
           initial="hidden"
           animate="visible"
         >
-          {/* Metrics Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <motion.div variants={itemVariants}>
-              <Card className="bg-card border-border shadow-sm">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Total Videos</CardTitle>
-                  <Video className="w-4 h-4 text-primary" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{totalVideos}</div>
-                  <p className="text-xs text-muted-foreground mt-1 flex items-center">
-                    <TrendingUp className="w-3 h-3 text-success mr-1" />
-                    <span className="text-success font-medium">+12.5%</span> from last month
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            <motion.div variants={itemVariants}>
-              <Card className="bg-card border-border shadow-sm">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Dataset Hours</CardTitle>
-                  <Clock className="w-4 h-4 text-primary" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{totalHours} <span className="text-sm text-muted-foreground font-normal">hrs</span></div>
-                  <p className="text-xs text-muted-foreground mt-1 flex items-center">
-                    <TrendingUp className="w-3 h-3 text-success mr-1" />
-                    <span className="text-success font-medium">+8.2%</span> from last month
-                  </p>
-                </CardContent>
-              </Card>
+
+          {/* ── KPI Row ── */}
+          <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <StatCard label="Total Videos"      value={totalVideos}     sub="+12.5% from last month" up={true}  Icon={Video}         iconColor="#2E86AB" glow="rgba(46,134,171,0.7)"  />
+            <StatCard label="Dataset Hours"     value={`${totalHours}`} sub="+8.2% from last month"  up={true}  Icon={Clock}         iconColor="#22C55E" glow="rgba(34,197,94,0.6)"  />
+            <StatCard label="Active Collections" value={MOCK_COLLECTIONS.length} sub="+1 new this week" up={true} Icon={Folder}    iconColor="#A78BFA" glow="rgba(167,139,250,0.6)" />
+            <StatCard label="Compliance Rate"   value={`${complianceRate}%`} sub="-2.1% from last month" up={false} Icon={CheckCircle} iconColor="#F59E0B" glow="rgba(245,158,11,0.6)" />
+          </motion.div>
+
+          {/* ── Charts Row ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <motion.div variants={item} className="rounded-2xl p-5" style={glass}>
+              <div className="mb-4">
+                <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Total Data Growth</h2>
+                <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Cumulative dataset hours ingested</p>
+              </div>
+              <div className="h-[230px]">
+                {isClient ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={dataGrowth} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="areaBlue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%"   stopColor="#2E86AB" stopOpacity={0.45} />
+                          <stop offset="100%" stopColor="#2E86AB" stopOpacity={0}    />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                      <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "#9090A0", fontSize: 11 }} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fill: "#9090A0", fontSize: 11 }} />
+                      <Tooltip contentStyle={tooltipStyle} cursor={{ stroke: "rgba(46,134,171,0.3)" }} />
+                      <Area type="monotone" dataKey="hours" stroke="#2E86AB" strokeWidth={2.5}
+                        fill="url(#areaBlue)" name="Hours" dot={false} activeDot={{ r: 5, fill: "#2E86AB", stroke: "#0F0F14", strokeWidth: 2 }} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="flex items-center justify-center h-full text-sm" style={{ color: "#9090A0" }}>Loading…</div>
+                )}
+              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <Card className="bg-card border-border shadow-sm">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Active Collections</CardTitle>
-                  <Folder className="w-4 h-4 text-primary" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{MOCK_COLLECTIONS.length}</div>
-                  <p className="text-xs text-muted-foreground mt-1 flex items-center">
-                    <TrendingUp className="w-3 h-3 text-success mr-1" />
-                    <span className="text-success font-medium">+1 new</span> this week
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card className="bg-card border-border shadow-sm">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">Compliance Rate</CardTitle>
-                  <CheckCircle className="w-4 h-4 text-success" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{complianceRate}%</div>
-                  <p className="text-xs text-muted-foreground mt-1 flex items-center">
-                    <TrendingDown className="w-3 h-3 text-warning mr-1" />
-                    <span className="text-warning font-medium">-2.1%</span> from last month
-                  </p>
-                </CardContent>
-              </Card>
+            <motion.div variants={item} className="rounded-2xl p-5" style={glass}>
+              <div className="mb-4">
+                <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Task Distribution</h2>
+                <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Video count by task category</p>
+              </div>
+              <div className="h-[230px]">
+                {isClient ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={taskDistribution} layout="vertical" margin={{ left: 10, right: 16 }}>
+                      <XAxis type="number" hide />
+                      <YAxis
+                        dataKey="name" type="category" axisLine={false} tickLine={false}
+                        tick={{ fill: "#9090A0", fontSize: 11 }} width={100}
+                      />
+                      <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(46,134,171,0.05)" }} />
+                      <Bar dataKey="value" radius={[0, 6, 6, 0]} name="Videos">
+                        {taskDistribution.map((_, i) => (
+                          <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="flex items-center justify-center h-full text-sm" style={{ color: "#9090A0" }}>Loading…</div>
+                )}
+              </div>
             </motion.div>
           </div>
 
-          {/* Charts Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <motion.div variants={itemVariants}>
-              <Card className="bg-card border-border shadow-sm h-full">
-                <CardHeader>
-                  <CardTitle className="text-base font-semibold">Total Data Growth</CardTitle>
-                </CardHeader>
-                <CardContent className="h-[250px]">
-                  {isClient ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={dataGrowth} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                        <defs>
-                          <linearGradient id="colorHours" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#1A3C5E" stopOpacity={0.3}/>
-                            <stop offset="95%" stopColor="#1A3C5E" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748B' }} />
-                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748B' }} />
-                        <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #E2E8F0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                        <Area type="monotone" dataKey="hours" stroke="#1A3C5E" strokeWidth={3} fillOpacity={1} fill="url(#colorHours)" />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Loading chart...</div>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
+          {/* ── Quick Actions + Recent Queue ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
 
-            <motion.div variants={itemVariants}>
-              <Card className="bg-card border-border shadow-sm h-full">
-                <CardHeader>
-                  <CardTitle className="text-base font-semibold">Task Distribution</CardTitle>
-                </CardHeader>
-                <CardContent className="h-[250px]">
-                  {isClient ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={taskDistribution} layout="vertical" margin={{ left: 30, right: 20 }}>
-                        <XAxis type="number" hide />
-                        <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: '#64748B', fontSize: 12 }} />
-                        <Tooltip cursor={{ fill: '#F1F5F9' }} contentStyle={{ borderRadius: '8px', border: '1px solid #E2E8F0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                        <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                          {taskDistribution.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                          ))}
-                        </Bar>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Loading chart...</div>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+            {/* Quick actions */}
+            <motion.div variants={item} className="lg:col-span-1 rounded-2xl p-5" style={glass}>
+              <h2 className="text-sm font-bold mb-4" style={{ color: "#F0F0F0" }}>Quick Actions</h2>
+              <div className="space-y-3">
+                <Link href="/collections" className="block">
+                  <button
+                    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left"
+                    style={{
+                      background: "rgba(46,134,171,0.10)",
+                      border: "1px solid rgba(46,134,171,0.22)",
+                      color: "#2E86AB",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.18)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(46,134,171,0.10)"; }}
+                  >
+                    <Grid className="w-4 h-4" /> Browse Collections
+                  </button>
+                </Link>
+                <Link href="/explorer" className="block">
+                  <button
+                    className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all text-left"
+                    style={{
+                      background: "rgba(34,197,94,0.08)",
+                      border: "1px solid rgba(34,197,94,0.20)",
+                      color: "#22C55E",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(34,197,94,0.15)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(34,197,94,0.08)"; }}
+                  >
+                    <Search className="w-4 h-4" /> Search Dataset
+                  </button>
+                </Link>
 
-          {/* Quick Links & Recent Activity */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <motion.div variants={itemVariants} className="lg:col-span-1 space-y-4">
-              <Card className="bg-card border-border shadow-sm h-full">
-                <CardHeader>
-                  <CardTitle className="text-base font-semibold">Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Link href="/collections" className="block">
-                    <Button variant="outline" className="w-full justify-start border-border bg-surface hover:bg-primary/5 hover:text-primary transition-all group">
-                      <Grid className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform text-primary" />
-                      Browse Collections
-                    </Button>
-                  </Link>
-                  <Link href="/explorer" className="block">
-                    <Button variant="outline" className="w-full justify-start border-border bg-surface hover:bg-secondary/5 hover:text-secondary transition-all group">
-                      <Search className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform text-secondary" />
-                      Search Dataset
-                    </Button>
-                  </Link>
-                  <div className="pt-4 mt-4 border-t border-border">
-                    <div className="text-xs text-muted-foreground mb-2 font-medium uppercase tracking-wider">System Status</div>
-                    <div className="flex items-center gap-2 text-sm text-foreground">
-                      <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                      Data Pipeline Active
-                    </div>
+                <div
+                  className="mt-4 pt-4 space-y-2"
+                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#9090A0" }}>
+                    System Status
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: "#F0F0F0" }}>
+                    <div className="w-2 h-2 rounded-full" style={{
+                      background: "#22C55E",
+                      boxShadow: "0 0 8px #22C55E",
+                      animation: "pulse 2s infinite",
+                    }} />
+                    <span className="text-xs">Data Pipeline Active</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-3 h-3" style={{ color: "#F59E0B" }} />
+                    <span className="text-xs" style={{ color: "#9090A0" }}>API Latency: 42ms</span>
+                  </div>
+                </div>
+              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="lg:col-span-3">
-              <Card className="bg-card border-border shadow-sm overflow-hidden h-full">
-                <CardHeader className="pb-0">
-                  <CardTitle className="text-base font-semibold">Recent Ingestion Queue</CardTitle>
-                </CardHeader>
-                <CardContent className="p-0 mt-4">
-                  <Table>
-                    <TableHeader className="bg-surface">
-                      <TableRow className="border-border">
-                        <TableHead className="font-semibold text-foreground">Video ID</TableHead>
-                        <TableHead className="font-semibold text-foreground">Tasks</TableHead>
-                        <TableHead className="font-semibold text-foreground">Duration</TableHead>
-                        <TableHead className="font-semibold text-foreground">Ingestion Date</TableHead>
-                        <TableHead className="text-right font-semibold text-foreground">QA Status</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {MOCK_VIDEOS.slice(-5).reverse().map((video) => (
-                        <TableRow key={video.id} className="border-border hover:bg-surface/50 transition-colors cursor-pointer">
-                          <TableCell className="font-mono text-sm text-primary font-medium">{video.video_id}</TableCell>
-                          <TableCell>
-                            <div className="flex gap-1 flex-wrap">
-                              {video.task_type.slice(0, 2).map((task, i) => (
-                                <Badge key={i} variant="secondary" className="bg-primary/10 text-primary border-primary/20 font-medium text-[10px]">
-                                  {task}
-                                </Badge>
-                              ))}
-                              {video.task_type.length > 2 && (
-                                <Badge variant="secondary" className="bg-surface text-muted-foreground border-border text-[10px]">
-                                  +{video.task_type.length - 2}
-                                </Badge>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell className="font-mono text-xs text-muted-foreground">{video.video_length}</TableCell>
-                          <TableCell className="text-muted-foreground text-sm">{video.recording_date}</TableCell>
-                          <TableCell className="text-right">
-                            {video.qa_status === "Verified" ? (
-                              <Badge className="bg-success/10 text-success hover:bg-success/20 border-success/20 shadow-none">Verified</Badge>
-                            ) : (
-                              <Badge variant="outline" className="text-warning border-warning/30 bg-warning/5 shadow-none">Pending</Badge>
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
+            {/* Recent ingestion queue */}
+            <motion.div variants={item} className="lg:col-span-3 rounded-2xl overflow-hidden" style={glass}>
+              <div className="px-5 pt-5 pb-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                <h2 className="text-sm font-bold" style={{ color: "#F0F0F0" }}>Recent Ingestion Queue</h2>
+                <p className="text-xs mt-0.5" style={{ color: "#9090A0" }}>Latest videos added to your collections</p>
+              </div>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background: "rgba(0,0,0,0.20)" }}>
+                    {["Video ID", "Tasks", "Duration", "Date", "QA Status"].map((h, i) => (
+                      <th
+                        key={h}
+                        className={`px-5 py-3 text-xs font-bold uppercase tracking-wider ${i === 4 ? "text-right" : "text-left"}`}
+                        style={{ color: "#9090A0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {MOCK_VIDEOS.slice(-6).reverse().map((video, i) => (
+                    <tr
+                      key={video.id}
+                      className="transition-colors"
+                      style={{ borderBottom: i < 5 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,134,171,0.05)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                    >
+                      <td className="px-5 py-3 font-mono font-semibold text-xs" style={{ color: "#2E86AB" }}>
+                        {video.video_id}
+                      </td>
+                      <td className="px-5 py-3">
+                        <div className="flex gap-1 flex-wrap">
+                          {video.task_type.slice(0, 2).map((task, j) => (
+                            <span
+                              key={j}
+                              className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                              style={{ background: "rgba(46,134,171,0.12)", color: "#2E86AB", border: "1px solid rgba(46,134,171,0.20)" }}
+                            >
+                              {task}
+                            </span>
+                          ))}
+                          {video.task_type.length > 2 && (
+                            <span
+                              className="px-1.5 py-0.5 rounded text-[10px]"
+                              style={{ background: "rgba(144,144,160,0.10)", color: "#9090A0" }}
+                            >
+                              +{video.task_type.length - 2}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 font-mono text-xs" style={{ color: "#F0F0F0" }}>
+                        {video.video_length}
+                      </td>
+                      <td className="px-5 py-3 text-xs" style={{ color: "#9090A0" }}>
+                        {video.recording_date}
+                      </td>
+                      <td className="px-5 py-3 text-right">
+                        <span
+                          className="px-2.5 py-1 rounded-full text-[10px] font-semibold"
+                          style={
+                            video.qa_status === "Verified"
+                              ? { color: "#22C55E", background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.22)" }
+                              : { color: "#F59E0B", background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.22)" }
+                          }
+                        >
+                          {video.qa_status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </motion.div>
           </div>
+
         </motion.div>
       </main>
     </div>

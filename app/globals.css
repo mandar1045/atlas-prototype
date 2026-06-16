@@ -40,71 +40,56 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
+/* ─── Single dark palette — used as the ONLY :root so every page is dark ─── */
 :root {
-  --background: #FFFFFF;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --surface: #F8FAFC;
-  --primary: #1A3C5E;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F1F5F9;
-  --secondary-foreground: #1E293B;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --accent: #F1F5F9;
-  --accent-foreground: #1E293B;
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
-  --border: #E2E8F0;
-  --input: #E2E8F0;
-  --ring: #1A3C5E;
+  --background:            #0F0F14;
+  --foreground:            #F0F0F0;
+
+  --card:                  #1A1A2E;
+  --card-foreground:       #F0F0F0;
+
+  --popover:               #1A1A2E;
+  --popover-foreground:    #F0F0F0;
+
+  --surface:               #1A1A2E;
+
+  --primary:               #2E86AB;
+  --primary-foreground:    #F0F0F0;
+
+  --secondary:             #2A2A3E;
+  --secondary-foreground:  #F0F0F0;
+
+  --muted:                 #2A2A3E;
+  --muted-foreground:      #9090A0;
+
+  --accent:                #2E86AB;
+  --accent-foreground:     #F0F0F0;
+
+  --destructive:           #EF4444;
+  --destructive-foreground: #F0F0F0;
+
+  --border:                #2A2A3E;
+  --input:                 #2A2A3E;
+  --ring:                  #2E86AB;
+
   --radius: 0.5rem;
-  --sidebar: #F8FAFC;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #1A3C5E;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F1F5F9;
-  --sidebar-accent-foreground: #1E293B;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #1A3C5E;
-  
-  --success: #10B981;
+
+  /* Sidebar tokens */
+  --sidebar:                    #1A1A2E;
+  --sidebar-foreground:         #F0F0F0;
+  --sidebar-primary:            #2E86AB;
+  --sidebar-primary-foreground: #F0F0F0;
+  --sidebar-accent:             #2A2A3E;
+  --sidebar-accent-foreground:  #F0F0F0;
+  --sidebar-border:             #2A2A3E;
+  --sidebar-ring:               #2E86AB;
+
+  /* Semantic helpers */
+  --success: #22C55E;
   --warning: #F59E0B;
 }
 
-.dark {
-  --background: #0F172A;
-  --foreground: #F8FAFC;
-  --card: #1E293B;
-  --card-foreground: #F8FAFC;
-  --popover: #1E293B;
-  --popover-foreground: #F8FAFC;
-  --surface: #1E293B;
-  --primary: #38BDF8;
-  --primary-foreground: #0F172A;
-  --secondary: #334155;
-  --secondary-foreground: #F8FAFC;
-  --muted: #334155;
-  --muted-foreground: #94A3B8;
-  --accent: #334155;
-  --accent-foreground: #F8FAFC;
-  --destructive: #7F1D1D;
-  --destructive-foreground: #F8FAFC;
-  --border: #334155;
-  --input: #334155;
-  --ring: #38BDF8;
-  --sidebar: #1E293B;
-  --sidebar-foreground: #F8FAFC;
-  --sidebar-primary: #38BDF8;
-  --sidebar-primary-foreground: #0F172A;
-  --sidebar-accent: #334155;
-  --sidebar-accent-foreground: #F8FAFC;
-  --sidebar-border: #334155;
-  --sidebar-ring: #38BDF8;
-}
+/* No separate .dark block needed — root IS dark */
 
 @layer base {
   * {
